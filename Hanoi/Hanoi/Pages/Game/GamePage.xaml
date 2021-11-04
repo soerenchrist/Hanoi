@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:game="clr-namespace:Hanoi.Pages.Game" xmlns:controls="clr-namespace:Hanoi.Controls"
+             x:Class="Hanoi.Pages.Game.GamePage"
+             NavigationPage.HasNavigationBar="False"
+             x:DataType="game:GamePageViewModel">
+    <ContentPage.Content>
+        <Grid RowDefinitions="Auto, *">
+            <Label HorizontalOptions="CenterAndExpand" Text="{Binding ElapsedTime}" />
+            <controls:GameControl GameLogic="{Binding GameLogic}"
+                                  Grid.Row="1"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

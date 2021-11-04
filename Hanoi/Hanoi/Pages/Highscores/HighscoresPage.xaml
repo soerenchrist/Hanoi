@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:highscores="clr-namespace:Hanoi.Pages.Highscores" xmlns:models="clr-namespace:Hanoi.Models" xmlns:converters="clr-namespace:Hanoi.Converters"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="Hanoi.Pages.Highscores.HighscoresPage"
+             x:DataType="highscores:HighscoresPageViewModel">
+    <ContentPage.Resources>
+        <converters:MillisecondsToTimeConverter x:Key="TimeConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid RowDefinitions="50, *"
+              Padding="{StaticResource PagePadding}">
+            <CollectionView 
+                SelectedItem="{Binding SelectedDiscSizeIndex}"
+                ItemsSource="{Binding DiscSizes}"
+                SelectionMode="Single">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"
+                                       ItemSpacing="6" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="x:Int32">
+                        <Grid WidthRequest="50"
+                              HeightRequest="50">
+                            <Label Text="{Binding .}"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <CollectionView
+                Margin="10"
+                ItemsSource="{Binding Highscores}"
+                Grid.Row="1">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="6" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.EmptyView>
+                    <Label Text="No highscores for this number of discs"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           VerticalOptions="Center" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:HighscoreItem">
+                        <Grid RowDefinitions="Auto, Auto">
+
+                            <Label Grid.Row="0"
+                                   FontSize="Medium"
+                                   FontAttributes="Bold">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Time: " />
+                                        <Span Text="{Binding TimeInMilliseconds, Converter={StaticResource TimeConverter}}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Text="{Binding DateTime}"
+                                   Grid.Row="1"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

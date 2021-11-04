@@ -1,4 +1,5 @@
-﻿using Hanoi.Pages.Game;
+﻿using Hanoi.Dialogs;
+using Hanoi.Pages.Game;
 using Hanoi.Pages.Highscores;
 using Hanoi.Pages.Start;
 using Hanoi.Services;
@@ -30,6 +31,7 @@ namespace Hanoi
             containerRegistry.RegisterForNavigation<StartPage, StartPageViewModel>("Start");
             containerRegistry.RegisterForNavigation<GamePage, GamePageViewModel>("Game");
             containerRegistry.RegisterForNavigation<HighscoresPage, HighscoresPageViewModel>("Highscores");
+            containerRegistry.RegisterDialog<GameFinishedDialog, GameFinishedDialogViewModel>("GameFinished");
         }
     }
 }

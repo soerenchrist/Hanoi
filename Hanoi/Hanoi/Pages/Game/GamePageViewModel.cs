@@ -4,6 +4,7 @@ using Hanoi.Pages.Base;
 using Hanoi.Services;
 using Prism.Navigation;
 using Prism.Services;
+using Prism.Services.Dialogs;
 using ReactiveUI;
 using System;
 using System.Diagnostics;
@@ -24,17 +25,17 @@ namespace Hanoi.Pages.Game
         }
 
         private readonly Stopwatch _stopwatch = new Stopwatch();
-        private readonly IPageDialogService _pageDialogService;
+        private readonly IDialogService _dialogService;
         private readonly DataService _dataService;
         public GamePageViewModel(INavigationService navigationService,
-            IPageDialogService pageDialogService,
+            IDialogService dialogService,
             DataService dataService) : base(navigationService)
         {
             _elapsedTime = Observable.Interval(TimeSpan.FromSeconds(.5))
                 .Select(_ => _stopwatch.Elapsed)
                 .Select(FormatTime)
                 .ToProperty(this, x => x.ElapsedTime);
-            _pageDialogService = pageDialogService;
+            _dialogService = dialogService;
             _dataService = dataService;
         }
 
@@ -75,9 +76,15 @@ namespace Hanoi.Pages.Game
                 TimeInMilliseconds = _stopwatch.ElapsedMilliseconds,
             });
 
-            await _pageDialogService.DisplayAlertAsync("Congrats!", $"You did it! \nYour time: {FormatTime(_stopwatch.Elapsed)}.\n" +
-                $"{(highScore ? "This is a new Highscore!" : "")}", "Ok");
-            GoBack.Execute();
+            var parameters = await _dialogService.ShowDialogAsync($"GameFinished?Highscore={highScore}&Time={_stopwatch.ElapsedMilliseconds}");
+            if (parameters.Parameters?.ContainsKey("ShowHighscores") ?? false)
+            {
+                await NavigationService.NavigateAsync($"../Highscores?NumberOfDiscs={GameLogic.NumberOfDiscs}");
+            }
+            else
+            {
+                GoBack.Execute();
+            }
         }
 
         private string FormatTime(TimeSpan time)

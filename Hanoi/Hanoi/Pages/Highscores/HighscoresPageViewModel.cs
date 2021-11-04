@@ -59,6 +59,10 @@ namespace Hanoi.Pages.Highscores
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
+            if (parameters.ContainsKey("NumberOfDiscs"))
+            {
+                SelectedDiscSizeIndex = parameters.GetValue<int>("NumberOfDiscs");
+            }
         }
     }
 }

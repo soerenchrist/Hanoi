@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:converters="clr-namespace:Hanoi.Converters" xmlns:dialogs="clr-namespace:Hanoi.Dialogs"
+      x:Class="Hanoi.Dialogs.GameFinishedDialog"
+      RowDefinitions="Auto, Auto, Auto, Auto"
+      ColumnDefinitions="*, Auto"
+      WidthRequest="400"
+      HeightRequest="300"
+      x:DataType="dialogs:GameFinishedDialogViewModel"
+      Padding="{StaticResource PagePadding}"
+      BackgroundColor="Transparent">
+    <Grid.Resources>
+        <converters:MillisecondsToTimeConverter x:Key="TimeConverter" />
+    </Grid.Resources>
+
+    <Frame CornerRadius="12"
+           BackgroundColor="Black"
+           Grid.ColumnSpan="2"
+           Grid.RowSpan="4" />
+
+    <Label FontSize="Large"
+           Text="You did it!"
+           Grid.Column="0"
+           VerticalOptions="Center"
+           HorizontalOptions="Center"
+           Grid.ColumnSpan="2"
+           />
+    <Button Text="X"
+            FontSize="Large"
+            BackgroundColor="Black"
+            Grid.Column="1"
+            Command="{Binding Close}" />
+
+    <Label Grid.Column="0"
+           Grid.Row="1"
+           Grid.ColumnSpan="2"
+           Margin="10"
+           HorizontalOptions="Center">
+        <Label.FormattedText>
+            <FormattedString>
+                <Span Text="Your time: " />
+                <Span Text="{Binding Time, Converter={StaticResource TimeConverter}}" />
+            </FormattedString>
+        </Label.FormattedText>
+    </Label>
+    <Label Grid.ColumnSpan="2"
+           Grid.Row="2"
+           HorizontalOptions="Center"
+           FontAttributes="Bold"
+           Margin="10"
+           Text="It's a new Highscore!"
+           IsVisible="{Binding HighScore}" />
+    <Grid Grid.Row="3"
+          Grid.ColumnSpan="2"
+          ColumnDefinitions="*, *">
+        <Button Text="Show highscores"
+                Command="{Binding ShowHighscores}"/>
+        <Button Text="Close"
+                Command="{Binding Close}"
+                Grid.Column="1"/>
+    </Grid>
+</Grid>

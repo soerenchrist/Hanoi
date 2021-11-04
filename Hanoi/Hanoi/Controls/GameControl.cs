@@ -30,6 +30,8 @@ namespace Hanoi.Controls
             Style = SKPaintStyle.Fill
         };
 
+        private readonly float[] _stickPositions = new float[3];
+
         const int StickWidth = 10;
         const int DiscHeight = 40;
         const int MinDiscWidth = 100;
@@ -59,6 +61,29 @@ namespace Hanoi.Controls
 
 
             DrawSticks(canvas);
+            DrawSelected(canvas);
+        }
+
+        private void DrawSelected(SKCanvas canvas)
+        {
+            if (GameLogic?.SelectedDisc == null
+                || GameLogic?.SelectedStack == null)
+                return;
+
+            int index = GameLogic.SelectedStack switch
+            {
+                StackName.Left => 0,
+                StackName.Middle => 1,
+                _ => 2
+            };
+
+            var currentX = _stickPositions[index];
+            var y = _canvasHeight * 0.15f;
+
+            var discWidth = _discSizes[GameLogic.SelectedDisc.Size];
+            _discPaint.Color = GameLogic.SelectedDisc.Color;
+
+            canvas.DrawRect(currentX - discWidth / 2, y, discWidth, DiscHeight, _discPaint);
         }
 
         protected override void OnTouch(SKTouchEventArgs e)
@@ -84,11 +109,15 @@ namespace Hanoi.Controls
 
         private void DrawStack(SKCanvas canvas, IEnumerable<Disc> stack, float offsetX)
         {
+            if (GameLogic == null)
+                return;
             int count = 0;
 
             // from bottom to top
             foreach (var disc in stack.Reverse())
             {
+                if (disc == GameLogic.SelectedDisc)
+                    continue;
                 var width = _discSizes[disc.Size];
 
                 var startX = offsetX - width / 2;
@@ -120,6 +149,7 @@ namespace Hanoi.Controls
 
                 canvas.DrawRect(stickX, top, StickWidth, stickHeight, _stickPaint);
 
+                _stickPositions[i - 1] = currentX;
                 DrawStack(canvas, i switch
                 {
                     1 => GameLogic.Left,

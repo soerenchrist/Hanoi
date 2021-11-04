@@ -25,7 +25,14 @@ namespace Hanoi.Logic
         public bool GameWon
         {
             get => _gameWon;
-            set => this.RaiseAndSetIfChanged(ref _gameWon, value);
+            private set => this.RaiseAndSetIfChanged(ref _gameWon, value);
+        }
+
+        private StackName? _selectedStack;
+        public StackName? SelectedStack
+        {
+            get => _selectedStack;
+            private set => this.RaiseAndSetIfChanged(ref _selectedStack, value);
         }
 
         private Stack<Disc>? _originStack;
@@ -64,6 +71,7 @@ namespace Hanoi.Logic
                 if (selectedStack.Count == 0)
                     return;
 
+                SelectedStack = stack;
                 SelectedDisc = selectedStack.Peek();
                 _originStack = selectedStack;
             } 
@@ -79,6 +87,7 @@ namespace Hanoi.Logic
                         GameWon = true;
                 }
 
+                SelectedStack = null;
                 SelectedDisc = null;
                 _originStack = null;
             }

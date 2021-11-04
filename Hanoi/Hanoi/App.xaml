@@ -7,6 +7,21 @@
     <Application.Resources>
         <ResourceDictionary>
             <Thickness x:Key="PagePadding">16</Thickness>
+
+            <Style TargetType="Entry">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList x:Name="CommonStates">
+                        <VisualStateGroup>
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor" Value="#eeeeee" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </dryioc:PrismApplication>

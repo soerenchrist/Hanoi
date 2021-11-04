@@ -6,10 +6,26 @@
              NavigationPage.HasNavigationBar="False"
              x:DataType="game:GamePageViewModel">
     <ContentPage.Content>
-        <Grid RowDefinitions="Auto, *">
-            <Label HorizontalOptions="CenterAndExpand" Text="{Binding ElapsedTime}" />
+        <Grid RowDefinitions="Auto, *"
+              ColumnDefinitions="*, *">
+            <Label HorizontalOptions="Center" 
+                   Text="{Binding ElapsedTime}"
+                   Grid.Column="0" 
+                   FontSize="Medium" />
+            <Label HorizontalOptions="Center"
+                   Grid.Column="1"
+                   FontSize="Medium">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding GameLogic.MoveCount}" />
+                        <Span Text=" Moves" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
             <controls:GameControl GameLogic="{Binding GameLogic}"
-                                  Grid.Row="1"/>
+                                  Grid.Row="1"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="2"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

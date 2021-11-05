@@ -47,8 +47,10 @@ namespace Hanoi.Pages.Game
             IDialogService dialogService,
             DataService dataService) : base(navigationService)
         {
-            var countdownChanged = this.WhenAnyValue(x => x.CountDown);
+            _dialogService = dialogService;
+            _dataService = dataService;
 
+            var countdownChanged = this.WhenAnyValue(x => x.CountDown);
             var countdownFinished = countdownChanged.Where(x => x == 0);
 
             _gameRunning = this.WhenAnyValue(x => x.CountDown)
@@ -75,8 +77,6 @@ namespace Hanoi.Pages.Game
                 .Select(_ => _stopwatch.Elapsed)
                 .Select(FormatTime)
                 .ToProperty(this, x => x.ElapsedTime);
-            _dialogService = dialogService;
-            _dataService = dataService;
         }
 
         public override void OnNavigatedTo(INavigationParameters parameters)

@@ -48,9 +48,11 @@
                 </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewmodels:HighscoreViewModel">
-                        <Grid RowDefinitions="Auto, Auto">
-
+                        <Grid RowDefinitions="Auto, Auto"
+                              RowSpacing="0"
+                              Padding="6">
                             <Label Grid.Row="0"
+                                   FontFamily="InconsolataBold"
                                    FontSize="Medium"
                                    FontAttributes="Bold">
                                 <Label.FormattedText>

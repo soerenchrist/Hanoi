@@ -13,8 +13,8 @@ namespace Hanoi.Util
             int minutes = seconds / 60;
             if (minutes == 0)
                 return $"{seconds}.{remainingMillis} s";
-
-            return $"{minutes}:{seconds} min";
+            var remainingSeconds = minutes % 60;
+            return $"{minutes}:{remainingSeconds} min";
         }
     }
 }

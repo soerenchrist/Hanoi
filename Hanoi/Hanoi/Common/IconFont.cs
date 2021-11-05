@@ -3,6 +3,9 @@ using Xamarin.Forms;
 // ReSharper disable UnusedMember.Global
 
 [assembly: ExportFont("materialdesignicons-webfont.ttf", Alias = "MaterialIcons")]
+[assembly: ExportFont("Inconsolata-Bold.ttf", Alias = "InconsolataBold")]
+[assembly: ExportFont("Inconsolata-Regular.ttf", Alias = "Inconsolata")]
+[assembly: ExportFont("Inconsolata-Light.ttf", Alias = "InconsolataLight")]
 namespace Hanoi.Common
 {
     public static class IconFont

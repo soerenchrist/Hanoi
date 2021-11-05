@@ -2,15 +2,35 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:start="clr-namespace:Hanoi.Pages.Start"
+             xmlns:common="clr-namespace:Hanoi.Common"
              x:Class="Hanoi.Pages.Start.StartPage"
              x:DataType="start:StartPageViewModel"
              NavigationPage.HasNavigationBar="False">
     <Grid Padding="{StaticResource PagePadding}">
         <StackLayout VerticalOptions="Center">
+
+            <Grid RowDefinitions="Auto,Auto"
+                  HorizontalOptions="Center"
+                  RowSpacing="0">
+
+                <Label FontSize="40"
+                   Text="HANOI"
+                   HorizontalOptions="Center"
+                   FontFamily="InconsolataBold" />
+
+                <Label Text="Speed Run"
+                       Grid.Row="1"
+                       FontSize="Medium"
+                       Margin="0, -10, 0, 0"
+                   HorizontalOptions="Center" />
+            </Grid>
+            
+
             <Grid ColumnDefinitions="Auto, *, Auto"
                   VerticalOptions="Center">
-                <Button Text="-"
+                <Button Text="{x:Static common:IconFont.Minus}"
                         Command="{Binding Minus}"
+                        FontFamily="MaterialIcons"
                         Grid.Column="0"/>
 
                 <Entry IsEnabled="False"
@@ -18,7 +38,8 @@
                        HorizontalTextAlignment="Center"
                        Text="{Binding DiscsText}" />
 
-                <Button Text="+"
+                <Button Text="{x:Static common:IconFont.Plus}"
+                        FontFamily="MaterialIcons"
                         Command="{Binding Plus}"
                         Grid.Column="2"/>
             </Grid>

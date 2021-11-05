@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Grid xmlns="http://xamarin.com/schemas/2014/forms" 
-      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:converters="clr-namespace:Hanoi.Converters" xmlns:dialogs="clr-namespace:Hanoi.Dialogs"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+      xmlns:converters="clr-namespace:Hanoi.Converters" 
+      xmlns:dialogs="clr-namespace:Hanoi.Dialogs"
+      xmlns:common="clr-namespace:Hanoi.Common"
       x:Class="Hanoi.Dialogs.GameFinishedDialog"
       RowDefinitions="Auto, Auto, Auto, Auto"
       ColumnDefinitions="*, Auto"
@@ -25,7 +28,7 @@
            HorizontalOptions="Center"
            Grid.ColumnSpan="2"
            />
-    <Button Text="X"
+    <Button Text="{x:Static common:IconFont.Close}"
             FontSize="Large"
             BackgroundColor="Black"
             Grid.Column="1"

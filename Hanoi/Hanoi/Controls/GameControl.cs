@@ -1,5 +1,6 @@
 ﻿using Hanoi.Logic;
 using Hanoi.Models;
+using Hanoi.Util;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using System.Collections.Generic;
@@ -47,7 +48,7 @@ namespace Hanoi.Controls
         private readonly float[] _stickPositions = new float[3];
 
         const int StickWidth = 10;
-        const int DiscHeight = 40;
+        const int DiscHeight = 50;
         const int MinDiscWidth = 100;
         const int MarginBetweenDiscs = 50;
 
@@ -97,7 +98,12 @@ namespace Hanoi.Controls
             var discWidth = _discSizes[GameLogic.SelectedDisc.Size];
             _discPaint.Color = GameLogic.SelectedDisc.Color;
 
-            canvas.DrawRect(currentX - discWidth / 2, y, discWidth, DiscHeight, _discPaint);
+            var x = currentX - discWidth / 2;
+            var rect = new SKRect(x, y, x + discWidth, y + DiscHeight);
+            var roundRect = new SKRoundRect(rect, 16f);
+            canvas.DrawRoundRect(roundRect, _discPaint);
+
+            DrawText(currentX, y, GameLogic.SelectedDisc, canvas);
         }
 
         protected override void OnTouch(SKTouchEventArgs e)
@@ -139,14 +145,15 @@ namespace Hanoi.Controls
                 var startY = count * DiscHeight;
                 startY = _canvasHeight - startY - DiscHeight; 
                 _discPaint.Color = disc.Color;
-                canvas.DrawRect(startX, startY, width, DiscHeight, _discPaint);
+                var roundRect = new SKRoundRect(new SKRect(startX, startY, startX + width, startY + DiscHeight), 15f);
+                canvas.DrawRoundRect(roundRect, _discPaint);
                 DrawText(offsetX, startY, disc, canvas);
 
                 count++;
             }
         }
 
-        private void DrawText(float x, int y, Disc disc, SKCanvas canvas)
+        private void DrawText(float x, float y, Disc disc, SKCanvas canvas)
         {
             if (GameSettings?.ShowDiscNumbers ?? false)
             {
@@ -155,18 +162,10 @@ namespace Hanoi.Controls
                 _textPaint.MeasureText(text, ref bounds);
 
                 var startY = y + DiscHeight / 2 + bounds.Height / 2;
-                var isDark = IsDarkColor(disc.Color);
+                var isDark = Colors.IsDarkColor(disc.Color);
                 _textPaint.Color = isDark ? SKColors.White : SKColors.Black;
                 canvas.DrawText(text, x, startY, _textPaint);
             }
-        }
-
-        private bool IsDarkColor(SKColor color)
-        {
-            // Standard formula
-            var luma = 0.2126 * color.Red + 0.7152 * color.Green + 0.0722 * color.Blue;
-
-            return luma < 40;
         }
 
         private void DrawSticks(SKCanvas canvas)

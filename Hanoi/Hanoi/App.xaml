@@ -8,6 +8,18 @@
         <ResourceDictionary>
             <Thickness x:Key="PagePadding">16</Thickness>
 
+            <Color x:Key="BackgroundColor">#222222</Color>
+            <Color x:Key="AccentColor">#fbc02d</Color>
+
+            <Color x:Key="Disc0">#3c505c</Color>
+            <Color x:Key="Disc1">#236471</Color>
+            <Color x:Key="Disc2">#007878</Color>
+            <Color x:Key="Disc3">#008b6e</Color>
+            <Color x:Key="Disc4">#3c9b56</Color>
+            <Color x:Key="Disc5">#78a633</Color>
+            <Color x:Key="Disc6">#b9ab00</Color>
+            <Color x:Key="Disc7">#ffa600</Color>
+
             <Style TargetType="Entry">
                 <Setter Property="FontFamily" Value="Inconsolata" />
                 <Setter Property="VisualStateManager.VisualStateGroups">

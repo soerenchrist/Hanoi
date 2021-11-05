@@ -10,6 +10,7 @@ namespace Hanoi.Models
         public int Id { get; set; }
 
         public int NumberOfDiscs { get; set; }
+        public int MovesNeeded { get; set; }
         public long TimeInMilliseconds { get; set; }
         public DateTime DateTime { get; set; }
 

@@ -5,6 +5,7 @@
              xmlns:converters="clr-namespace:Hanoi.Converters"
              xmlns:viewmodels="clr-namespace:Hanoi.ViewModels"
              NavigationPage.HasNavigationBar="False"
+             xmlns:common="clr-namespace:Hanoi.Common"
              x:Class="Hanoi.Pages.Highscores.HighscoresPage"
              x:DataType="highscores:HighscoresPageViewModel">
     <ContentPage.Resources>
@@ -49,7 +50,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewmodels:HighscoreViewModel">
                         <Grid RowDefinitions="Auto, Auto"
-                              ColumnDefinitions="Auto, *"
+                              ColumnDefinitions="80, *, Auto, 50"
                               RowSpacing="0"
                               Padding="6">
 
@@ -75,6 +76,38 @@
                             <Label Text="{Binding DateTime}"
                                    Grid.Column="1"
                                    Grid.Row="1"/>
+
+                            <StackLayout VerticalOptions="Center"
+                                         Spacing="0"
+                                         Grid.Column="2"
+                                         Grid.RowSpan="2">
+                                <Label>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Moves needed: " />
+                                            <Span Text="{Binding MovesNeeded}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="Minimum moves: " />
+                                            <Span Text="{Binding PossibleMoves}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </StackLayout>
+
+                            <Label Grid.Column="3"
+                                       Grid.RowSpan="2"
+                                       VerticalOptions="Center"
+                                       Margin="10"
+                                       FontFamily="MaterialIcons"
+                                       IsVisible="{Binding PerfectGame}"
+                                       Text="{x:Static common:IconFont.Star}"
+                                       FontSize="Large" />
+
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

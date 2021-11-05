@@ -125,6 +125,7 @@ namespace Hanoi.Pages.Game
                 DateTime = DateTime.Now,
                 NumberOfDiscs = GameLogic.NumberOfDiscs,
                 TimeInMilliseconds = _stopwatch.ElapsedMilliseconds,
+                MovesNeeded = GameLogic.MoveCount
             });
 
             var dialogParameters = new DialogParameters

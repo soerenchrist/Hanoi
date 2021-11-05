@@ -1,4 +1,5 @@
 ﻿
+using Hanoi.Util;
 using System;
 using System.Globalization;
 using Xamarin.Forms;
@@ -9,10 +10,9 @@ namespace Hanoi.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is long millis)
+            if (value is TimeSpan timespan)
             {
-                var timespan = new TimeSpan(millis * 10000);
-                return timespan.ToString(@"hh\:mm\:ss");
+                return timespan.Format();
             }
             return "";
         }

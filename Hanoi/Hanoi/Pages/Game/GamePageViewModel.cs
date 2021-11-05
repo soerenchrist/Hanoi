@@ -76,7 +76,13 @@ namespace Hanoi.Pages.Game
                 TimeInMilliseconds = _stopwatch.ElapsedMilliseconds,
             });
 
-            var parameters = await _dialogService.ShowDialogAsync($"GameFinished?Highscore={highScore}&Time={_stopwatch.ElapsedMilliseconds}");
+            var dialogParameters = new DialogParameters
+            {
+                { "Highscore", highScore },
+                { "Time", _stopwatch.Elapsed }
+            };
+
+            var parameters = await _dialogService.ShowDialogAsync($"GameFinished", dialogParameters);
             if (parameters.Parameters?.ContainsKey("ShowHighscores") ?? false)
             {
                 await NavigationService.NavigateAsync($"../Highscores?NumberOfDiscs={GameLogic.NumberOfDiscs}");

@@ -2,6 +2,7 @@
 using Hanoi.Models;
 using Hanoi.Pages.Base;
 using Hanoi.Services;
+using Hanoi.ViewModels;
 using Prism.Navigation;
 using ReactiveUI;
 using System;
@@ -23,8 +24,8 @@ namespace Hanoi.Pages.Highscores
         }
 
         private SourceCache<HighscoreItem, int> _highscoresCache = new(x => x.Id);
-        private readonly ReadOnlyObservableCollection<HighscoreItem> _highscores;
-        public ReadOnlyObservableCollection<HighscoreItem> Highscores => _highscores;
+        private readonly ReadOnlyObservableCollection<HighscoreViewModel> _highscores;
+        public ReadOnlyObservableCollection<HighscoreViewModel> Highscores => _highscores;
 
         private readonly DataService _dataService;
         public HighscoresPageViewModel(INavigationService navigationService,
@@ -37,6 +38,7 @@ namespace Hanoi.Pages.Highscores
             }
 
             _highscoresCache.Connect()
+                .Transform(x => new HighscoreViewModel(x))
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(out _highscores)
                 .Subscribe();

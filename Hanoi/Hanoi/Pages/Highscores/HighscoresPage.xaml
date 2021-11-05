@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:highscores="clr-namespace:Hanoi.Pages.Highscores" xmlns:models="clr-namespace:Hanoi.Models" xmlns:converters="clr-namespace:Hanoi.Converters"
+             xmlns:highscores="clr-namespace:Hanoi.Pages.Highscores"
+             xmlns:converters="clr-namespace:Hanoi.Converters"
+             xmlns:viewmodels="clr-namespace:Hanoi.ViewModels"
              NavigationPage.HasNavigationBar="False"
              x:Class="Hanoi.Pages.Highscores.HighscoresPage"
              x:DataType="highscores:HighscoresPageViewModel">
@@ -45,7 +47,7 @@
                            VerticalOptions="Center" />
                 </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:HighscoreItem">
+                    <DataTemplate x:DataType="viewmodels:HighscoreViewModel">
                         <Grid RowDefinitions="Auto, Auto">
 
                             <Label Grid.Row="0"
@@ -54,7 +56,7 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="Time: " />
-                                        <Span Text="{Binding TimeInMilliseconds, Converter={StaticResource TimeConverter}}" />
+                                        <Span Text="{Binding Time, Converter={StaticResource TimeConverter}}" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>

@@ -12,5 +12,8 @@ namespace Hanoi.Models
         public int NumberOfDiscs { get; set; }
         public long TimeInMilliseconds { get; set; }
         public DateTime DateTime { get; set; }
+
+        [Ignore]
+        public int Position { get; set; }
     }
 }

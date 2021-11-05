@@ -28,8 +28,20 @@ namespace Hanoi.Services
         }
 
         public IEnumerable<HighscoreItem> GetHighscoreItems(int numberOfDiscs)
-            => _db.Table<HighscoreItem>().Where(x => x.NumberOfDiscs == numberOfDiscs)
-                    .OrderBy(x => x.TimeInMilliseconds);
+        {
+            var items = _db.Table<HighscoreItem>().Where(x => x.NumberOfDiscs == numberOfDiscs)
+                               .OrderBy(x => x.TimeInMilliseconds)
+                               .ToList();
+
+            int position = 1;
+            foreach (var item in items)
+            {
+                item.Position = position;
+                position++;
+            }
+
+            return items;
+        }
 
         public long GetFastestTime(int numberOfDiscs)
             => _db.Table<HighscoreItem>()

@@ -49,9 +49,19 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewmodels:HighscoreViewModel">
                         <Grid RowDefinitions="Auto, Auto"
+                              ColumnDefinitions="Auto, *"
                               RowSpacing="0"
                               Padding="6">
+
+                            <Label VerticalOptions="Center"
+                                   FontSize="40"
+                                   Text="{Binding Position}"
+                                   Margin="10, 0, 20, 0"
+                                   Grid.Column="0"
+                                   Grid.RowSpan="2" />
+
                             <Label Grid.Row="0"
+                                   Grid.Column="1"
                                    FontFamily="InconsolataBold"
                                    FontSize="Medium"
                                    FontAttributes="Bold">
@@ -63,6 +73,7 @@
                                 </Label.FormattedText>
                             </Label>
                             <Label Text="{Binding DateTime}"
+                                   Grid.Column="1"
                                    Grid.Row="1"/>
                         </Grid>
                     </DataTemplate>

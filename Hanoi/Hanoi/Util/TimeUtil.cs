@@ -14,7 +14,7 @@ namespace Hanoi.Util
             if (minutes == 0)
                 return $"{seconds}.{remainingMillis} s";
             var remainingSeconds = minutes % 60;
-            return $"{minutes}:{remainingSeconds} min";
+            return $"{minutes}:{remainingSeconds.ToString().PadLeft(2, '0')}.{remainingMillis} min";
         }
     }
 }

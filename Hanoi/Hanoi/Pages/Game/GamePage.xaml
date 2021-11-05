@@ -1,31 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:game="clr-namespace:Hanoi.Pages.Game" xmlns:controls="clr-namespace:Hanoi.Controls"
+             xmlns:game="clr-namespace:Hanoi.Pages.Game" 
+             xmlns:common="clr-namespace:Hanoi.Common"
+             xmlns:controls="clr-namespace:Hanoi.Controls"
              x:Class="Hanoi.Pages.Game.GamePage"
              NavigationPage.HasNavigationBar="False"
              x:DataType="game:GamePageViewModel">
     <ContentPage.Content>
-        <Grid RowDefinitions="Auto, *"
-              ColumnDefinitions="*, *">
-            <Label HorizontalOptions="Center" 
+        <Grid Padding="{StaticResource PagePadding}"
+              RowDefinitions="Auto, *">
+
+            <Grid ColumnDefinitions="*, Auto"
+                  RowDefinitions="Auto, Auto">
+
+                <Button Text="{x:Static common:IconFont.Settings}"
+                        Grid.Column="0"
+                        FontFamily="MaterialIcons"
+                        Grid.RowSpan="2"
+                        HorizontalOptions="Start" 
+                        Command="{Binding Pause}"/>
+
+                <Label HorizontalOptions="End" 
                    Text="{Binding ElapsedTime}"
-                   Grid.Column="0" 
-                   FontSize="Medium" />
-            <Label HorizontalOptions="Center"
                    Grid.Column="1"
-                   FontSize="Medium">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="{Binding GameLogic.MoveCount}" />
-                        <Span Text=" Moves" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+                   FontSize="Medium" />
+                <Label HorizontalOptions="End"
+                       Grid.Column="1"
+                       Grid.Row="1"
+                       FontSize="Medium">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding GameLogic.MoveCount}" />
+                            <Span Text=" Moves" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Grid>
+
+
             <controls:GameControl GameLogic="{Binding GameLogic}"
-                                  Grid.Row="1"
-                                  Grid.Column="0"
-                                  Grid.ColumnSpan="2"/>
+                                  Grid.Row="1"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

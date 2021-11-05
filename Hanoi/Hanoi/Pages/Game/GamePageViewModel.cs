@@ -2,8 +2,8 @@
 using Hanoi.Models;
 using Hanoi.Pages.Base;
 using Hanoi.Services;
+using Prism.Commands;
 using Prism.Navigation;
-using Prism.Services;
 using Prism.Services.Dialogs;
 using ReactiveUI;
 using System;
@@ -27,6 +27,10 @@ namespace Hanoi.Pages.Game
         private readonly Stopwatch _stopwatch = new Stopwatch();
         private readonly IDialogService _dialogService;
         private readonly DataService _dataService;
+
+        private DelegateCommand? _pause;
+        public DelegateCommand Pause => _pause ??= new DelegateCommand(ExecutePause);
+
         public GamePageViewModel(INavigationService navigationService,
             IDialogService dialogService,
             DataService dataService) : base(navigationService)
@@ -41,6 +45,8 @@ namespace Hanoi.Pages.Game
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
+            if (parameters.GetNavigationMode() == NavigationMode.Back)
+                return;
             if (parameters.ContainsKey("Discs"))
             {
                 var discCount = parameters.GetValue<int>("Discs");
@@ -58,6 +64,18 @@ namespace Hanoi.Pages.Game
                 GoBack.Execute();
             }
             base.OnNavigatedTo(parameters);
+        }
+
+        private async void ExecutePause()
+        {
+            _stopwatch.Stop();
+            var result = await _dialogService.ShowDialogAsync("GamePaused");
+            if (result.Parameters.ContainsKey("GoToMainMenu"))
+            {
+                await NavigationService.GoBackAsync();
+                return;
+            }
+            _stopwatch.Start();
         }
 
         private async void GameWon()

@@ -32,6 +32,7 @@ namespace Hanoi
             containerRegistry.RegisterForNavigation<GamePage, GamePageViewModel>("Game");
             containerRegistry.RegisterForNavigation<HighscoresPage, HighscoresPageViewModel>("Highscores");
             containerRegistry.RegisterDialog<GameFinishedDialog, GameFinishedDialogViewModel>("GameFinished");
+            containerRegistry.RegisterDialog<GamePausedDialog, GamePausedDialogViewModel>("GamePaused");
         }
     }
 }

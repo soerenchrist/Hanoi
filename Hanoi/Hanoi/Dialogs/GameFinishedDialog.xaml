@@ -31,6 +31,7 @@
     <Button Text="{x:Static common:IconFont.Close}"
             FontSize="Large"
             BackgroundColor="Black"
+            FontFamily="MaterialIcons"
             Grid.Column="1"
             Command="{Binding Close}" />
 

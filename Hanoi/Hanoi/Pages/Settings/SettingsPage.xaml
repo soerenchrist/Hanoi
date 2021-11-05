@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:settings="clr-namespace:Hanoi.Pages.Settings"
+             x:Class="Hanoi.Pages.Settings.SettingsPage"
+             x:DataType="settings:SettingsPageViewModel"
+             xmlns:common="clr-namespace:Hanoi.Common"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <StackLayout Padding="{StaticResource PagePadding}">
+            <Button Style="{StaticResource IconButton}"
+                    Text="{x:Static common:IconFont.Close}"
+                    HorizontalOptions="End"
+                    Command="{Binding GoBack}"/>
+
+            <Grid ColumnDefinitions="*, Auto">
+                <Label Text="Show numbers on discs"
+                       VerticalOptions="Center"/>
+
+                <Switch Grid.Column="1"
+                        VerticalOptions="Center"
+                        IsToggled="{Binding GameSettings.ShowDiscNumbers}" />
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

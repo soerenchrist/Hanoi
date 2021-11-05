@@ -1,6 +1,7 @@
 ﻿using Hanoi.Dialogs;
 using Hanoi.Pages.Game;
 using Hanoi.Pages.Highscores;
+using Hanoi.Pages.Settings;
 using Hanoi.Pages.Start;
 using Hanoi.Services;
 using Prism.Ioc;
@@ -31,6 +32,8 @@ namespace Hanoi
             containerRegistry.RegisterForNavigation<StartPage, StartPageViewModel>("Start");
             containerRegistry.RegisterForNavigation<GamePage, GamePageViewModel>("Game");
             containerRegistry.RegisterForNavigation<HighscoresPage, HighscoresPageViewModel>("Highscores");
+            containerRegistry.RegisterForNavigation<SettingsPage, SettingsPageViewModel>("Settings");
+
             containerRegistry.RegisterDialog<GameFinishedDialog, GameFinishedDialogViewModel>("GameFinished");
             containerRegistry.RegisterDialog<GamePausedDialog, GamePausedDialogViewModel>("GamePaused");
         }

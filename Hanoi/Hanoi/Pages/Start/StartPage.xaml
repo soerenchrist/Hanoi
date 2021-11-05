@@ -7,6 +7,12 @@
              x:DataType="start:StartPageViewModel"
              NavigationPage.HasNavigationBar="False">
     <Grid Padding="{StaticResource PagePadding}">
+        <Button Text="{x:Static common:IconFont.Settings}"
+                Style="{StaticResource IconButton}"
+                Command="{Binding Navigate}"
+                CommandParameter="Settings?useModalNavigation=true"
+                HorizontalOptions="End"
+                VerticalOptions="Start"/>
         <StackLayout VerticalOptions="Center">
 
             <Grid RowDefinitions="Auto,Auto"

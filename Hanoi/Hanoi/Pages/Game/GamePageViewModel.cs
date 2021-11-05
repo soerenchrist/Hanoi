@@ -24,6 +24,8 @@ namespace Hanoi.Pages.Game
             private set => this.RaiseAndSetIfChanged(ref _gameLogic, value);
         }
 
+        public GameSettings GameSettings { get; } = new();
+
         private readonly Stopwatch _stopwatch = new Stopwatch();
         private readonly IDialogService _dialogService;
         private readonly DataService _dataService;

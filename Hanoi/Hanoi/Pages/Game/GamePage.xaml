@@ -40,6 +40,7 @@
 
 
             <controls:GameControl GameLogic="{Binding GameLogic}"
+                                  GameSettings="{Binding GameSettings}"
                                   Grid.Row="1"/>
         </Grid>
     </ContentPage.Content>

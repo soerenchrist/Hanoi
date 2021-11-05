@@ -2,7 +2,6 @@
 using Hanoi.Models;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
@@ -15,15 +14,30 @@ namespace Hanoi.Controls
         public static readonly BindableProperty GameLogicProperty =
             BindableProperty.Create(nameof(GameLogic), typeof(GameLogic), typeof(GameControl), null, BindingMode.OneWay, propertyChanged: GameLogicPropertyChanged);
 
+        public static readonly BindableProperty GameSettingsProperty =
+            BindableProperty.Create(nameof(GameSettings), typeof(GameSettings), typeof(GameControl), null, BindingMode.OneWay, propertyChanged: GameSettingsPropertyChanged);
+
         public GameLogic? GameLogic {
             get => (GameLogic) GetValue(GameLogicProperty);
             set => SetValue(GameLogicProperty, value);
+        }
+
+        public GameSettings? GameSettings
+        {
+            get => (GameSettings) GetValue(GameSettingsProperty);
+            set => SetValue(GameSettingsProperty, value);
         }
 
         private readonly SKPaint _stickPaint = new()
         {
             Style = SKPaintStyle.Fill,
             Color = SKColors.DarkGray
+        };
+        private readonly SKPaint _textPaint = new()
+        {
+            Color = SKColors.Black,
+            TextSize = 32,
+            TextAlign = SKTextAlign.Center,
         };
         private readonly SKPaint _discPaint = new()
         {
@@ -126,9 +140,33 @@ namespace Hanoi.Controls
                 startY = _canvasHeight - startY - DiscHeight; 
                 _discPaint.Color = disc.Color;
                 canvas.DrawRect(startX, startY, width, DiscHeight, _discPaint);
+                DrawText(offsetX, startY, disc, canvas);
 
                 count++;
             }
+        }
+
+        private void DrawText(float x, int y, Disc disc, SKCanvas canvas)
+        {
+            if (GameSettings?.ShowDiscNumbers ?? false)
+            {
+                string text = disc.Size.ToString();
+                SKRect bounds = new SKRect();
+                _textPaint.MeasureText(text, ref bounds);
+
+                var startY = y + DiscHeight / 2 + bounds.Height / 2;
+                var isDark = IsDarkColor(disc.Color);
+                _textPaint.Color = isDark ? SKColors.White : SKColors.Black;
+                canvas.DrawText(text, x, startY, _textPaint);
+            }
+        }
+
+        private bool IsDarkColor(SKColor color)
+        {
+            // Standard formula
+            var luma = 0.2126 * color.Red + 0.7152 * color.Green + 0.0722 * color.Blue;
+
+            return luma < 40;
         }
 
         private void DrawSticks(SKCanvas canvas)
@@ -158,6 +196,12 @@ namespace Hanoi.Controls
                 }, currentX);
                 currentX += StickWidth + (_maxDiscSize / 2);
             }
+        }
+
+        private static void GameSettingsPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is GameControl control)
+                control.InvalidateSurface();
         }
 
         private static void GameLogicPropertyChanged(BindableObject bindable, object oldValue, object newValue)

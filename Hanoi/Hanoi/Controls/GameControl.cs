@@ -3,6 +3,7 @@ using Hanoi.Models;
 using Hanoi.Util;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
@@ -57,13 +58,16 @@ namespace Hanoi.Controls
         private readonly float[] _stickPositions = new float[3];
 
         const int StickWidth = 10;
-        const int DiscHeight = 50;
+        const int DefaultDiscHeight = 50;
         const int MinDiscWidth = 100;
         const int MarginBetweenDiscs = 50;
 
         private int _canvasWidth;
         private int _canvasHeight;
         private float _maxDiscSize;
+        private float _maxDiscHeight;
+
+        private float DiscHeight => Math.Min(_maxDiscHeight, DefaultDiscHeight);
 
         private Dictionary<int, float> _discSizes = new Dictionary<int, float>();
 
@@ -83,7 +87,6 @@ namespace Hanoi.Controls
             if (GameLogic == null || !GameRunning)
                 return;
 
-
             DrawSticks(canvas);
             DrawSelected(canvas);
         }
@@ -102,7 +105,7 @@ namespace Hanoi.Controls
             };
 
             var currentX = _stickPositions[index];
-            var y = _canvasHeight * 0.15f;
+            var y = _canvasHeight * 0.04f;
 
             var discWidth = _discSizes[GameLogic.SelectedDisc.Size];
             _discPaint.Color = GameLogic.SelectedDisc.Color;
@@ -182,7 +185,7 @@ namespace Hanoi.Controls
             if (GameLogic == null)
                 return;
 
-            var stickHeight = _canvasHeight * 0.75f;
+            var stickHeight = _canvasHeight * 0.90f;
             var top = _canvasHeight - stickHeight;
 
             var currentX = 0.0f;
@@ -217,17 +220,17 @@ namespace Hanoi.Controls
             if (bindable is GameControl control && newValue != null)
             {
                 control.CalculateDiscSizes();
+                control.CalculateMaxDiscHeight();
                 control.InvalidateSurface();
             }
         }
 
-        protected override SizeRequest OnMeasure(double widthConstraint, double heightConstraint)
+        private void CalculateMaxDiscHeight()
         {
-            InvalidateSurface();
-            CalculateDiscSizes();
-            InvalidateSurface();
-
-            return base.OnMeasure(widthConstraint, heightConstraint);
+            if (GameLogic == null)
+                return;
+            var heightWithOffset = _canvasHeight * 0.90f - 30;
+            _maxDiscHeight = heightWithOffset / GameLogic.NumberOfDiscs;
         }
 
         private void CalculateDiscSizes()

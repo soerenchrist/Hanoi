@@ -20,7 +20,11 @@
                 <Button Text="{x:Static common:IconFont.Settings}"
                         Grid.Column="0"
                         FontFamily="MaterialIcons"
+                        BackgroundColor="Transparent"
                         Grid.RowSpan="2"
+                        FontSize="Large"
+                        Padding="0"
+                        WidthRequest="50"
                         HorizontalOptions="Start" 
                         Command="{Binding Pause}"/>
 

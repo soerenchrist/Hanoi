@@ -10,8 +10,7 @@
       WidthRequest="400"
       HeightRequest="300"
       x:DataType="dialogs:GameFinishedDialogViewModel"
-      Padding="{StaticResource PagePadding}"
-      BackgroundColor="Transparent">
+      Padding="{StaticResource PagePadding}">
     <Grid.Resources>
         <converters:MillisecondsToTimeConverter x:Key="TimeConverter" />
     </Grid.Resources>

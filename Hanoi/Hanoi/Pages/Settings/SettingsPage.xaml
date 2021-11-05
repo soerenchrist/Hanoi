@@ -5,6 +5,7 @@
              x:Class="Hanoi.Pages.Settings.SettingsPage"
              x:DataType="settings:SettingsPageViewModel"
              xmlns:common="clr-namespace:Hanoi.Common"
+             BackgroundColor="{StaticResource BackgroundColor}"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout Padding="{StaticResource PagePadding}">

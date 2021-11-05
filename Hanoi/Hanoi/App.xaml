@@ -8,7 +8,9 @@
         <ResourceDictionary>
             <Thickness x:Key="PagePadding">16</Thickness>
 
-            <Color x:Key="BackgroundColor">#222222</Color>
+            <Color x:Key="BackgroundColor">#262626</Color>
+            <Color x:Key="ButtonBackgroundColor">#181818</Color>
+            <Color x:Key="TextColor">#eeeeee</Color>
             <Color x:Key="AccentColor">#fbc02d</Color>
 
             <Color x:Key="Disc0">#3c505c</Color>
@@ -21,6 +23,7 @@
             <Color x:Key="Disc7">#ffa600</Color>
 
             <Style TargetType="Entry">
+                <Setter Property="TextColor" Value="{StaticResource TextColor}" />
                 <Setter Property="FontFamily" Value="Inconsolata" />
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList x:Name="CommonStates">
@@ -37,13 +40,17 @@
             </Style>
 
             <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource TextColor}" />
                 <Setter Property="FontFamily" Value="Inconsolata" />
             </Style>
             <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource ButtonBackgroundColor}" />
+                <Setter Property="TextColor" Value="{StaticResource TextColor}" />
                 <Setter Property="FontFamily" Value="Inconsolata" />
             </Style>
 
             <Style TargetType="Button" x:Key="IconButton">
+                <Setter Property="TextColor" Value="{StaticResource TextColor}" />
                 <Setter Property="FontFamily" Value="MaterialIcons" />
                 <Setter Property="WidthRequest" Value="50" />
                 <Setter Property="FontSize" Value="Large" />

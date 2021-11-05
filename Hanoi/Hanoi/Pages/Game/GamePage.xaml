@@ -5,6 +5,7 @@
              xmlns:common="clr-namespace:Hanoi.Common"
              xmlns:controls="clr-namespace:Hanoi.Controls" xmlns:converters="clr-namespace:Hanoi.Converters"
              x:Class="Hanoi.Pages.Game.GamePage"
+             BackgroundColor="{StaticResource BackgroundColor}"
              NavigationPage.HasNavigationBar="False"
              x:DataType="game:GamePageViewModel">
     <ContentPage.Resources>

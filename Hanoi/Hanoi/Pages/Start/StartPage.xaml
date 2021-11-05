@@ -5,6 +5,7 @@
              xmlns:common="clr-namespace:Hanoi.Common"
              x:Class="Hanoi.Pages.Start.StartPage"
              x:DataType="start:StartPageViewModel"
+             BackgroundColor="{StaticResource BackgroundColor}"
              NavigationPage.HasNavigationBar="False">
     <Grid Padding="{StaticResource PagePadding}">
         <Button Text="{x:Static common:IconFont.Settings}"

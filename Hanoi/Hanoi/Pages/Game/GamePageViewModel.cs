@@ -36,7 +36,6 @@ namespace Hanoi.Pages.Game
 
         public GameSettings GameSettings { get; } = new();
 
-        private readonly Stopwatch _stopwatch = new Stopwatch();
         private readonly IDialogService _dialogService;
         private readonly DataService _dataService;
 
@@ -69,12 +68,11 @@ namespace Hanoi.Pages.Game
                 .Where(x => x)
                 .Do(_ =>
                 {
-                    _stopwatch.Reset();
-                    _stopwatch.Start();
+                    GameLogic?.Stopwatch.Start();
                 }).Subscribe();
 
             _elapsedTime = Observable.Interval(TimeSpan.FromSeconds(.5))
-                .Select(_ => _stopwatch.Elapsed)
+                .Select(_ => GameLogic?.Stopwatch.Elapsed ?? new TimeSpan())
                 .Select(FormatTime)
                 .ToProperty(this, x => x.ElapsedTime);
         }
@@ -87,28 +85,46 @@ namespace Hanoi.Pages.Game
             {
                 var discCount = parameters.GetValue<int>("Discs");
                 GameLogic = new GameLogic(discCount);
-
-                GameLogic.WhenAnyValue(x => x.GameWon)
-                    .Where(x => x)
-                    .Do(_ => GameWon())
-                    .Subscribe();
-            } else
+            } 
+            else if (parameters.ContainsKey("SavedGame"))
+            {
+                var savedGame = parameters.GetValue<SavedGame>("SavedGame");
+                GameLogic = new GameLogic(savedGame);
+            }
+            else
             {
                 GoBack.Execute();
+                return;
             }
+
+            _dataService.CurrentGame = GameLogic;
+            GameLogic.WhenAnyValue(x => x.GameWon)
+                .Where(x => x)
+                .Do(_ => GameWon())
+                .Subscribe();
             base.OnNavigatedTo(parameters);
+        }
+
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            if (parameters.GetNavigationMode() == NavigationMode.Back)
+            {
+                _dataService.SaveCurrentGame();
+                _dataService.CurrentGame = null;
+            }
+            base.OnNavigatedFrom(parameters);
         }
 
         private async void ExecutePause()
         {
-            _stopwatch.Stop();
+            GameLogic?.Stopwatch.Stop();
             var result = await _dialogService.ShowDialogAsync("GamePaused");
             if (result.Parameters.ContainsKey("GoToMainMenu"))
             {
                 await NavigationService.GoBackAsync();
                 return;
             }
-            _stopwatch.Start();
+            GameLogic?.Stopwatch.Start();
         }
 
         private async void GameWon()
@@ -116,22 +132,22 @@ namespace Hanoi.Pages.Game
             if (GameLogic == null)
                 return;
 
-            _stopwatch.Stop();
+            GameLogic.Stopwatch.Stop();
             var fastestTime = _dataService.GetFastestTime(GameLogic.NumberOfDiscs);
-            bool highScore = _stopwatch.ElapsedMilliseconds < fastestTime;
+            bool highScore = GameLogic.Stopwatch.ElapsedMilliseconds < fastestTime;
 
             _dataService.AddHighscore(new HighscoreItem
             {
                 DateTime = DateTime.Now,
                 NumberOfDiscs = GameLogic.NumberOfDiscs,
-                TimeInMilliseconds = _stopwatch.ElapsedMilliseconds,
+                TimeInMilliseconds = GameLogic.Stopwatch.ElapsedMilliseconds,
                 MovesNeeded = GameLogic.MoveCount
             });
 
             var dialogParameters = new DialogParameters
             {
                 { "Highscore", highScore },
-                { "Time", _stopwatch.Elapsed }
+                { "Time", GameLogic.Stopwatch.Elapsed }
             };
 
             var parameters = await _dialogService.ShowDialogAsync($"GameFinished", dialogParameters);

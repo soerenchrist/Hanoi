@@ -45,6 +45,9 @@
             </Grid>
             <Button Text="Start game"
                     Command="{Binding StartGame}" />
+            <Button Text="Resume game"
+                    IsVisible="{Binding HasSavedGame}"
+                    Command="{Binding ResumeGame}" />
             <Button Text="Highscores"
                     Command="{Binding Navigate}"
                     CommandParameter="Highscores" />

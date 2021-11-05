@@ -1,7 +1,10 @@
 ﻿using Hanoi.Pages.Base;
+using Hanoi.Services;
 using Prism.Commands;
 using Prism.Navigation;
 using ReactiveUI;
+using System;
+using System.Diagnostics;
 using System.Reactive.Linq;
 
 namespace Hanoi.Pages.Start
@@ -18,12 +21,20 @@ namespace Hanoi.Pages.Start
             set => this.RaiseAndSetIfChanged(ref _numberOfDiscs, value);
         }
 
-        private ObservableAsPropertyHelper<string> _discsText;
+        private bool _hasSavedGame;
+        public bool HasSavedGame
+        {
+            get => _hasSavedGame;
+            set => this.RaiseAndSetIfChanged(ref _hasSavedGame, value);
+        }
+
+        private readonly ObservableAsPropertyHelper<string> _discsText;
         public string DiscsText => _discsText.Value;
 
         private DelegateCommand? _plus;
         private DelegateCommand? _minus;
         private DelegateCommand? _startGame;
+        private DelegateCommand? _resumeGame;
         public DelegateCommand Plus => _plus ??= new DelegateCommand(() => NumberOfDiscs++, 
             () => NumberOfDiscs < MaxDiscs)
             .ObservesProperty(() => NumberOfDiscs);
@@ -32,12 +43,37 @@ namespace Hanoi.Pages.Start
             .ObservesProperty(() => NumberOfDiscs);
 
         public DelegateCommand StartGame => _startGame ??= new DelegateCommand(ExecuteStartGame);
+        public DelegateCommand ResumeGame => _resumeGame ??= new DelegateCommand(ExecuteResumeGame);
 
-        public StartPageViewModel(INavigationService navigationService) : base(navigationService)
+        private readonly DataService _dataService;
+
+        public StartPageViewModel(INavigationService navigationService,
+            DataService dataService) : base(navigationService)
         {
+            _dataService = dataService;
             _discsText = this.WhenAnyValue(x => x.NumberOfDiscs)
                 .Select(x => $"{x} discs")
                 .ToProperty(this, x => x.DiscsText);
+        }
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            HasSavedGame =  _dataService.HasSavedGame();
+        }
+
+        private async void ExecuteResumeGame()
+        {
+            var savedGame = _dataService.GetSavedGame();
+            if (savedGame == null)
+                StartGame.Execute();
+
+            var result = await NavigationService.NavigateAsync("Game", new NavigationParameters 
+            {
+                { "SavedGame", savedGame }
+            });
+            if (!result.Success)
+                Debugger.Break();
         }
 
         private void ExecuteStartGame()

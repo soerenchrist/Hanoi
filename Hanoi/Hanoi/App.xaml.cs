@@ -34,5 +34,21 @@ namespace Hanoi
             containerRegistry.RegisterDialog<GameFinishedDialog, GameFinishedDialogViewModel>("GameFinished");
             containerRegistry.RegisterDialog<GamePausedDialog, GamePausedDialogViewModel>("GamePaused");
         }
+
+        protected override void OnSleep()
+        {
+            base.OnSleep();
+            var dataService = Container.Resolve<DataService>();
+            dataService.SaveCurrentGame();
+
+            dataService.CurrentGame?.Stopwatch.Stop();
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            var dataService = Container.Resolve<DataService>();
+            dataService.CurrentGame?.Stopwatch.Start();
+        }
     }
 }

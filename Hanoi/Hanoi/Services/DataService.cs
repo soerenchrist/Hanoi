@@ -1,4 +1,5 @@
-﻿using Hanoi.Models;
+﻿using Hanoi.Logic;
+using Hanoi.Models;
 using SQLite;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +10,7 @@ namespace Hanoi.Services
     public class DataService
     {
         private readonly SQLiteConnection _db;
+        public GameLogic? CurrentGame { get; set; }
 
         public DataService()
         {
@@ -20,13 +22,34 @@ namespace Hanoi.Services
         public void Initialize()
         {
             _db.CreateTable<HighscoreItem>();
+            _db.CreateTable<SavedGame>();
         }
 
         public void AddHighscore(HighscoreItem item)
         {
+            _db.DeleteAll<SavedGame>();
             _db.Insert(item);
         }
 
+        public void SaveCurrentGame()
+        {
+            if (CurrentGame == null)
+                return;
+            if (CurrentGame.GameWon)
+                return;
+
+
+            var savedGame = CurrentGame.ToSavedGame();
+            _db.DeleteAll<SavedGame>();
+            _db.Insert(savedGame);
+        }
+
+        public bool HasSavedGame()
+            => _db.Table<SavedGame>().Count() > 0;
+
+        public SavedGame? GetSavedGame()
+            => _db.Table<SavedGame>().FirstOrDefault();
+        
         public IEnumerable<HighscoreItem> GetHighscoreItems(int numberOfDiscs)
         {
             var items = _db.Table<HighscoreItem>().Where(x => x.NumberOfDiscs == numberOfDiscs)

@@ -1,12 +1,17 @@
 ﻿using Hanoi.Models;
+using Hanoi.Util;
 using ReactiveUI;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Hanoi.Logic
 {
     public class GameLogic : ReactiveObject
     {
+        public ResumableStopWatch Stopwatch = new ResumableStopWatch();
+
         private Disc? _selectedDisc;
         public Disc? SelectedDisc
         {
@@ -55,6 +60,25 @@ namespace Hanoi.Logic
                 var disc = new Disc(i);
                 _left.Push(disc);
             }
+        }
+
+        public GameLogic(SavedGame savedGame)
+        {
+            Stopwatch = new ResumableStopWatch(savedGame.CurrentTime);
+            MoveCount = savedGame.MoveCount;
+            NumberOfDiscs = savedGame.NumberOfDiscs;
+
+            var left = DeserializeStack(savedGame.LeftStack);
+            foreach (var disc in left)
+                _left.Push(disc);
+
+            var middle = DeserializeStack(savedGame.MiddleStack);
+            foreach (var disc in middle)
+                _middle.Push(disc);
+
+            var right = DeserializeStack(savedGame.RightStack);
+            foreach (var disc in right)
+                _right.Push(disc);
         }
 
         public void SelectStack(StackName stack)
@@ -109,7 +133,29 @@ namespace Hanoi.Logic
             return SelectedDisc.Size < topDisc.Size;
         }
 
+        public SavedGame ToSavedGame()
+        {
+            return new SavedGame
+            {
+                CurrentTime = Stopwatch.ElapsedMilliseconds,
+                LeftStack = string.Join(",", Left.Select(x => x.Size)),
+                MiddleStack = String.Join(",", Middle.Select(x => x.Size)),
+                RightStack = String.Join(",", Right.Select(x => x.Size)),
+                MoveCount = MoveCount,
+                NumberOfDiscs = NumberOfDiscs,
+            };
+        }
 
+
+        private IEnumerable<Disc> DeserializeStack(string serialized)
+        {
+            var discSizes = serialized.Split(',');
+            foreach (var item in discSizes.Reverse())
+            {
+                if (int.TryParse(item, out var size))
+                    yield return new Disc(size);
+            }
+        }
     }
 
     public enum StackName

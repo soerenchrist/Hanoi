@@ -39,6 +39,7 @@ namespace Hanoi.Pages.Highscores
 
             _highscoresCache.Connect()
                 .Transform(x => new HighscoreViewModel(x))
+                .SortBy(x => x.Time)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(out _highscores)
                 .Subscribe();

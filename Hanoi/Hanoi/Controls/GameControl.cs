@@ -18,9 +18,18 @@ namespace Hanoi.Controls
         public static readonly BindableProperty GameSettingsProperty =
             BindableProperty.Create(nameof(GameSettings), typeof(GameSettings), typeof(GameControl), null, BindingMode.OneWay, propertyChanged: GameSettingsPropertyChanged);
 
+        public static readonly BindableProperty GameRunningProperty =
+            BindableProperty.Create(nameof(GameRunning), typeof(bool), typeof(GameControl), false, BindingMode.OneWay, propertyChanged: GameSettingsPropertyChanged);
+
         public GameLogic? GameLogic {
             get => (GameLogic) GetValue(GameLogicProperty);
             set => SetValue(GameLogicProperty, value);
+        }
+
+        public bool GameRunning
+        {
+            get => (bool) GetValue(GameRunningProperty);
+            set => SetValue(GameRunningProperty, value);
         }
 
         public GameSettings? GameSettings
@@ -71,7 +80,7 @@ namespace Hanoi.Controls
             _canvasWidth = e.Info.Width;
             _canvasHeight = e.Info.Height;
 
-            if (GameLogic == null)
+            if (GameLogic == null || !GameRunning)
                 return;
 
 
@@ -210,6 +219,15 @@ namespace Hanoi.Controls
                 control.CalculateDiscSizes();
                 control.InvalidateSurface();
             }
+        }
+
+        protected override SizeRequest OnMeasure(double widthConstraint, double heightConstraint)
+        {
+            InvalidateSurface();
+            CalculateDiscSizes();
+            InvalidateSurface();
+
+            return base.OnMeasure(widthConstraint, heightConstraint);
         }
 
         private void CalculateDiscSizes()

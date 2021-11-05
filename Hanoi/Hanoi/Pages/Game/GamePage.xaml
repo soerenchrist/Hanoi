@@ -3,10 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:game="clr-namespace:Hanoi.Pages.Game" 
              xmlns:common="clr-namespace:Hanoi.Common"
-             xmlns:controls="clr-namespace:Hanoi.Controls"
+             xmlns:controls="clr-namespace:Hanoi.Controls" xmlns:converters="clr-namespace:Hanoi.Converters"
              x:Class="Hanoi.Pages.Game.GamePage"
              NavigationPage.HasNavigationBar="False"
              x:DataType="game:GamePageViewModel">
+    <ContentPage.Resources>
+        <converters:NegateConverter x:Key="NegateConverter" />
+    </ContentPage.Resources>
     <ContentPage.Content>
         <Grid Padding="{StaticResource PagePadding}"
               RowDefinitions="Auto, *">
@@ -38,9 +41,17 @@
                 </Label>
             </Grid>
 
+            <Label Text="{Binding CountDown}"
+                   FontSize="80"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Grid.Row="1"
+                   IsVisible="{Binding GameRunning, Converter={StaticResource NegateConverter}}"/>
+
 
             <controls:GameControl GameLogic="{Binding GameLogic}"
                                   GameSettings="{Binding GameSettings}"
+                                  GameRunning="{Binding GameRunning}"
                                   Grid.Row="1"/>
         </Grid>
     </ContentPage.Content>

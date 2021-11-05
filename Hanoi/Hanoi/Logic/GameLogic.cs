@@ -93,6 +93,7 @@ namespace Hanoi.Logic
             }
         }
 
+
         private bool HasWon()
             => _right.Count == NumberOfDiscs;
         

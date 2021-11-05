@@ -24,6 +24,16 @@ namespace Hanoi.Pages.Game
             private set => this.RaiseAndSetIfChanged(ref _gameLogic, value);
         }
 
+        private int _countDown = 3;
+        public int CountDown
+        {
+            get => _countDown;
+            private set => this.RaiseAndSetIfChanged(ref _countDown, value);
+        }
+
+        private ObservableAsPropertyHelper<bool> _gameRunning;
+        public bool GameRunning => _gameRunning.Value;
+
         public GameSettings GameSettings { get; } = new();
 
         private readonly Stopwatch _stopwatch = new Stopwatch();
@@ -37,6 +47,30 @@ namespace Hanoi.Pages.Game
             IDialogService dialogService,
             DataService dataService) : base(navigationService)
         {
+            var countdownChanged = this.WhenAnyValue(x => x.CountDown);
+
+            var countdownFinished = countdownChanged.Where(x => x == 0);
+
+            _gameRunning = this.WhenAnyValue(x => x.CountDown)
+                .Select(x => x == 0)
+                .ToProperty(this, x => x.GameRunning);
+
+            Observable.Interval(TimeSpan.FromSeconds(1))
+                .TakeUntil(countdownFinished)
+                .Do(_ =>
+                {
+                    CountDown--;
+                })
+                .Subscribe();
+
+            this.WhenAnyValue(x => x.GameRunning)
+                .Where(x => x)
+                .Do(_ =>
+                {
+                    _stopwatch.Reset();
+                    _stopwatch.Start();
+                }).Subscribe();
+
             _elapsedTime = Observable.Interval(TimeSpan.FromSeconds(.5))
                 .Select(_ => _stopwatch.Elapsed)
                 .Select(FormatTime)
@@ -58,9 +92,6 @@ namespace Hanoi.Pages.Game
                     .Where(x => x)
                     .Do(_ => GameWon())
                     .Subscribe();
-
-                _stopwatch.Reset();
-                _stopwatch.Start();
             } else
             {
                 GoBack.Execute();

@@ -2,6 +2,7 @@
 using Hanoi.Models;
 using Hanoi.Pages.Base;
 using Hanoi.Services;
+using MarcTron.Plugin;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services.Dialogs;

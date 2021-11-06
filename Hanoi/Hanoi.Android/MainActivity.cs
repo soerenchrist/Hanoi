@@ -7,6 +7,7 @@ using Prism.Ioc;
 using Hanoi.Services;
 using Android.Content;
 using Android.Gms.Auth.Api.SignIn;
+using Android.Gms.Ads;
 
 namespace Hanoi.Droid
 {
@@ -19,9 +20,9 @@ namespace Hanoi.Droid
         {
             base.OnCreate(savedInstanceState);
 
-
             this.Window.AddFlags(Android.Views.WindowManagerFlags.Fullscreen);
 
+            MobileAds.Initialize(this);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             _gameService = new GameService();

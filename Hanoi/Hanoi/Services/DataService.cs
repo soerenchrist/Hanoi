@@ -23,6 +23,7 @@ namespace Hanoi.Services
         {
             _db.CreateTable<HighscoreItem>();
             _db.CreateTable<SavedGame>();
+            _db.CreateTable<AdCount>();
         }
 
         public void AddHighscore(HighscoreItem item)
@@ -64,6 +65,25 @@ namespace Hanoi.Services
             }
 
             return items;
+        }
+
+        public bool ShouldShowAd()
+        {
+            if (Preferences.Get("Pro", false))
+                return false;
+
+            var ads = _db.Table<AdCount>().ToList();
+            if (ads.Count == 2)
+            {
+                _db.DeleteAll<AdCount>();
+                return true;
+            }
+            _db.Insert(new AdCount()
+            {
+                Count = ads.Count + 1
+            });
+
+            return false;
         }
 
         public long GetFastestTime(int numberOfDiscs)

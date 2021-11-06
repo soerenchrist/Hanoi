@@ -3,6 +3,7 @@ using Hanoi.Models;
 using Hanoi.Pages.Base;
 using Hanoi.Services;
 using Hanoi.ViewModels;
+using MarcTron.Plugin;
 using Prism.Navigation;
 using ReactiveUI;
 using System;

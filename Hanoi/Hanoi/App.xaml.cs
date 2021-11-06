@@ -4,6 +4,7 @@ using Hanoi.Pages.Highscores;
 using Hanoi.Pages.Settings;
 using Hanoi.Pages.Start;
 using Hanoi.Services;
+using MarcTron.Plugin.Controls;
 using Prism;
 using Prism.Ioc;
 using System.Diagnostics;

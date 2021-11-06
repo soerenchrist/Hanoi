@@ -1,5 +1,6 @@
 ﻿using Hanoi.Pages.Base;
 using Hanoi.Services;
+using MarcTron.Plugin;
 using Prism.Commands;
 using Prism.Navigation;
 using ReactiveUI;
@@ -60,6 +61,28 @@ namespace Hanoi.Pages.Start
         {
             base.OnNavigatedTo(parameters);
             HasSavedGame =  _dataService.HasSavedGame();
+            
+            if (parameters.GetNavigationMode() == NavigationMode.Back)
+            {
+                if (_dataService.ShouldShowAd())
+                {
+#if DEBUG
+                    var adId = "ca-app-pub-3940256099942544/1033173712";
+#else
+                    var adId = "ca-app-pub-1335254545849085/8589321983";
+#endif
+                    static void ShowAd(object sender, EventArgs args)
+                    {
+                        if (CrossMTAdmob.Current.IsInterstitialLoaded())
+                            CrossMTAdmob.Current.ShowInterstitial();
+
+                        CrossMTAdmob.Current.OnInterstitialLoaded -= ShowAd;
+                    }
+
+                    CrossMTAdmob.Current.OnInterstitialLoaded += ShowAd;
+                    CrossMTAdmob.Current.LoadInterstitial(adId);
+                }
+            }
         }
 
         private async void ExecuteResumeGame()

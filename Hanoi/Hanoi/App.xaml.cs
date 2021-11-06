@@ -4,6 +4,7 @@ using Hanoi.Pages.Highscores;
 using Hanoi.Pages.Settings;
 using Hanoi.Pages.Start;
 using Hanoi.Services;
+using Prism;
 using Prism.Ioc;
 using System.Diagnostics;
 using Xamarin.Forms;
@@ -12,6 +13,11 @@ namespace Hanoi
 {
     public partial class App
     {
+
+        public App(IPlatformInitializer initializer) : base(initializer) 
+        {
+        }
+
         protected override async void OnInitialized()
         {
             InitializeComponent();
@@ -50,6 +56,7 @@ namespace Hanoi
         protected override void OnResume()
         {
             base.OnResume();
+
             var dataService = Container.Resolve<DataService>();
             dataService.CurrentGame?.Stopwatch.Start();
         }

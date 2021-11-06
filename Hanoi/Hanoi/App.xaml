@@ -13,6 +13,9 @@
             <Color x:Key="TextColor">#eeeeee</Color>
             <Color x:Key="AccentColor">#fbc02d</Color>
 
+            <x:String x:Key="BannerAdId">ca-app-pub-1335254545849085/7950494900</x:String>
+            <x:String x:Key="InterstitialAdId">ca-app-pub-1335254545849085/8589321983</x:String>
+
             <Color x:Key="Disc0">#3c505c</Color>
             <Color x:Key="Disc1">#236471</Color>
             <Color x:Key="Disc2">#007878</Color>

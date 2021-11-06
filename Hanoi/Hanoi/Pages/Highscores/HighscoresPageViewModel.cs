@@ -2,6 +2,7 @@
 using Hanoi.Models;
 using Hanoi.Pages.Base;
 using Hanoi.Services;
+using Hanoi.Util;
 using Hanoi.ViewModels;
 using MarcTron.Plugin;
 using Prism.Navigation;
@@ -15,6 +16,8 @@ namespace Hanoi.Pages.Highscores
 {
     public class HighscoresPageViewModel : ViewModelBase
     {
+        private string? _bannerAdId;
+        public string BannerAdId => _bannerAdId ??= AdUtil.GetBannerAdId();
         public List<int> DiscSizes { get; } = new List<int>();
 
         private int _selectedDiscSizeIndex = 3;

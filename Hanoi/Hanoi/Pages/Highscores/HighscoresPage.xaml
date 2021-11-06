@@ -5,7 +5,7 @@
              xmlns:converters="clr-namespace:Hanoi.Converters"
              xmlns:viewmodels="clr-namespace:Hanoi.ViewModels"
              NavigationPage.HasNavigationBar="False"
-             xmlns:common="clr-namespace:Hanoi.Common"
+             xmlns:common="clr-namespace:Hanoi.Common" xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
              x:Class="Hanoi.Pages.Highscores.HighscoresPage"
              BackgroundColor="{StaticResource BackgroundColor}"
              x:DataType="highscores:HighscoresPageViewModel">
@@ -13,9 +13,11 @@
         <converters:MillisecondsToTimeConverter x:Key="TimeConverter" />
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid RowDefinitions="50, *"
+        <Grid RowDefinitions="50, *, Auto"
+              ColumnDefinitions="*, Auto"
               Padding="{StaticResource PagePadding}">
             <CollectionView 
+                Grid.Column="0"
                 SelectedItem="{Binding SelectedDiscSizeIndex}"
                 ItemsSource="{Binding DiscSizes}"
                 SelectionMode="Single">
@@ -34,8 +36,16 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
+            <Button Style="{StaticResource IconButton}"
+                    HorizontalOptions="End"
+                    Grid.Column="1"
+                    Command="{Binding GoBack}"
+                    VerticalOptions="Start"
+                    Text="{x:Static common:IconFont.Close}" />
             <CollectionView
                 Margin="10"
+                Grid.ColumnSpan="2"
                 ItemsSource="{Binding Highscores}"
                 Grid.Row="1">
                 <CollectionView.ItemsLayout>
@@ -113,6 +123,13 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
+            <controls:MTAdView
+                Grid.ColumnSpan="2"
+                Grid.Row="2"
+                HeightRequest="50"
+                Margin="0, 0, 0, -16"
+                AdsId="{Binding BannerAdId}"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

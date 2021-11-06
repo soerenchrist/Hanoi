@@ -1,5 +1,6 @@
 ﻿using Hanoi.Pages.Base;
 using Hanoi.Services;
+using Hanoi.Util;
 using MarcTron.Plugin;
 using Prism.Commands;
 using Prism.Navigation;
@@ -14,6 +15,9 @@ namespace Hanoi.Pages.Start
     {
         private const int MinDiscs = 3;
         private const int MaxDiscs = 20;
+
+        private string? _bannerAdId;
+        public string BannerAdId => _bannerAdId ??= AdUtil.GetBannerAdId();
 
         private int _numberOfDiscs = 3;
         public int NumberOfDiscs
@@ -66,11 +70,6 @@ namespace Hanoi.Pages.Start
             {
                 if (_dataService.ShouldShowAd())
                 {
-#if DEBUG
-                    var adId = "ca-app-pub-3940256099942544/1033173712";
-#else
-                    var adId = "ca-app-pub-1335254545849085/8589321983";
-#endif
                     static void ShowAd(object sender, EventArgs args)
                     {
                         if (CrossMTAdmob.Current.IsInterstitialLoaded())
@@ -80,7 +79,7 @@ namespace Hanoi.Pages.Start
                     }
 
                     CrossMTAdmob.Current.OnInterstitialLoaded += ShowAd;
-                    CrossMTAdmob.Current.LoadInterstitial(adId);
+                    CrossMTAdmob.Current.LoadInterstitial(AdUtil.GetInterstitialAdId());
                 }
             }
         }

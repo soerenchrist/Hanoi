@@ -2,19 +2,22 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:start="clr-namespace:Hanoi.Pages.Start"
-             xmlns:common="clr-namespace:Hanoi.Common"
+             xmlns:common="clr-namespace:Hanoi.Common" xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
              x:Class="Hanoi.Pages.Start.StartPage"
              x:DataType="start:StartPageViewModel"
              BackgroundColor="{StaticResource BackgroundColor}"
              NavigationPage.HasNavigationBar="False">
-    <Grid Padding="{StaticResource PagePadding}">
+    <Grid Padding="{StaticResource PagePadding}"
+          RowDefinitions="*, Auto">
         <Button Text="{x:Static common:IconFont.Settings}"
                 Style="{StaticResource IconButton}"
                 Command="{Binding Navigate}"
+                Grid.Row="0"
                 CommandParameter="Settings?useModalNavigation=true"
                 HorizontalOptions="End"
                 VerticalOptions="Start"/>
-        <StackLayout VerticalOptions="Center">
+        <StackLayout VerticalOptions="Center"
+                     Grid.Row="0">
 
             <Grid RowDefinitions="Auto,Auto"
                   HorizontalOptions="Center"
@@ -57,7 +60,13 @@
                     Command="{Binding ResumeGame}" />
             <Button Text="Highscores"
                     Command="{Binding Navigate}"
-                    CommandParameter="Highscores" />
+                    CommandParameter="Highscores?useModalNavigation=true" />
         </StackLayout>
+        
+        <controls:MTAdView
+                           Grid.Row="1"
+                           HeightRequest="50"
+                           Margin="0, 0, 0, -16"
+                           AdsId="{Binding BannerAdId}"/>
     </Grid>
 </ContentPage>

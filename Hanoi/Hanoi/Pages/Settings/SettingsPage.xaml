@@ -4,9 +4,13 @@
              xmlns:settings="clr-namespace:Hanoi.Pages.Settings"
              x:Class="Hanoi.Pages.Settings.SettingsPage"
              x:DataType="settings:SettingsPageViewModel"
-             xmlns:common="clr-namespace:Hanoi.Common"
+             xmlns:common="clr-namespace:Hanoi.Common" 
+             xmlns:converters="clr-namespace:Hanoi.Converters"
              BackgroundColor="{StaticResource BackgroundColor}"
              NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <converters:NegateConverter x:Key="NegateConverter" />
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Padding="{StaticResource PagePadding}">
             <Button Style="{StaticResource IconButton}"
@@ -22,6 +26,10 @@
                         VerticalOptions="Center"
                         IsToggled="{Binding GameSettings.ShowDiscNumbers}" />
             </Grid>
+
+            <Button Text="Remove ads"
+                    Command="{Binding Purchase}"
+                    IsVisible="{Binding IsPro, Converter={StaticResource NegateConverter}}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -43,6 +43,8 @@ namespace Hanoi
 
             containerRegistry.RegisterDialog<GameFinishedDialog, GameFinishedDialogViewModel>("GameFinished");
             containerRegistry.RegisterDialog<GamePausedDialog, GamePausedDialogViewModel>("GamePaused");
+
+            containerRegistry.Register<IBillingService, BillingService>();
         }
 
         protected override void OnSleep()

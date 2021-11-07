@@ -67,21 +67,29 @@ namespace Hanoi.Services
             return items;
         }
 
+        public void IncrementGameCount()
+        {
+            if (Preferences.Get("Pro", false))
+                return;
+
+            var count = _db.Table<AdCount>().Count();
+            _db.Insert(new AdCount()
+            {
+                Count = count + 1
+            });
+        }
+
         public bool ShouldShowAd()
         {
             if (Preferences.Get("Pro", false))
                 return false;
 
-            var ads = _db.Table<AdCount>().ToList();
-            if (ads.Count == 2)
+            var adCount = _db.Table<AdCount>().Count();
+            if (adCount >= 3)
             {
                 _db.DeleteAll<AdCount>();
                 return true;
             }
-            _db.Insert(new AdCount()
-            {
-                Count = ads.Count + 1
-            });
 
             return false;
         }

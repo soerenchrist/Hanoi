@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
+using Xamarin.Essentials;
 
 namespace Hanoi.Pages.Highscores
 {
@@ -18,6 +19,9 @@ namespace Hanoi.Pages.Highscores
     {
         private string? _bannerAdId;
         public string BannerAdId => _bannerAdId ??= AdUtil.GetBannerAdId();
+
+        public bool IsPro => Preferences.Get("Pro", false);
+
         public List<int> DiscSizes { get; } = new List<int>();
 
         private int _selectedDiscSizeIndex = 3;

@@ -8,6 +8,7 @@ using ReactiveUI;
 using System;
 using System.Diagnostics;
 using System.Reactive.Linq;
+using Xamarin.Essentials;
 
 namespace Hanoi.Pages.Start
 {
@@ -15,6 +16,7 @@ namespace Hanoi.Pages.Start
     {
         private const int MinDiscs = 3;
         private const int MaxDiscs = 20;
+        public bool IsPro => Preferences.Get("Pro", false);
 
         private string? _bannerAdId;
         public string BannerAdId => _bannerAdId ??= AdUtil.GetBannerAdId();
@@ -66,7 +68,7 @@ namespace Hanoi.Pages.Start
             base.OnNavigatedTo(parameters);
             HasSavedGame =  _dataService.HasSavedGame();
             
-            if (parameters.GetNavigationMode() == NavigationMode.Back)
+            if (parameters.GetNavigationMode() == Prism.Navigation.NavigationMode.Back)
             {
                 if (_dataService.ShouldShowAd())
                 {

@@ -10,6 +10,7 @@
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <converters:NegateConverter x:Key="NegateConverter" />
+        <converters:IsDebugConverter x:Key="IsDebugConverter" />
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Padding="{StaticResource PagePadding}">
@@ -30,6 +31,10 @@
             <Button Text="Remove ads"
                     Command="{Binding Purchase}"
                     IsVisible="{Binding IsPro, Converter={StaticResource NegateConverter}}" />
+
+            <Button Text="Toggle Pro"
+                    IsVisible="{Binding IsPro, Converter={StaticResource IsDebugConverter}}" 
+                    Clicked="Button_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

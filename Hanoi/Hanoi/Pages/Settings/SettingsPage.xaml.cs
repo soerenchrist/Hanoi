@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,6 +11,12 @@ namespace Hanoi.Pages.Settings
         public SettingsPage()
         {
             InitializeComponent();
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            var isPro = Preferences.Get("Pro", false);
+            Preferences.Set("Pro", !isPro);
         }
     }
 }

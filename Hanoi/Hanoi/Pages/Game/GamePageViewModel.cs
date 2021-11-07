@@ -110,6 +110,7 @@ namespace Hanoi.Pages.Game
         {
             if (parameters.GetNavigationMode() == NavigationMode.Back)
             {
+                _dataService.IncrementGameCount();
                 _dataService.SaveCurrentGame();
                 _dataService.CurrentGame = null;
             }

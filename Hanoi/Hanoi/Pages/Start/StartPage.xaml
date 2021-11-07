@@ -2,11 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:start="clr-namespace:Hanoi.Pages.Start"
-             xmlns:common="clr-namespace:Hanoi.Common" xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
+             xmlns:common="clr-namespace:Hanoi.Common" xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob" xmlns:converters="clr-namespace:Hanoi.Converters"
              x:Class="Hanoi.Pages.Start.StartPage"
              x:DataType="start:StartPageViewModel"
              BackgroundColor="{StaticResource BackgroundColor}"
              NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <converters:NegateConverter x:Key="NegateConverter" />
+    </ContentPage.Resources>
     <Grid Padding="{StaticResource PagePadding}"
           RowDefinitions="*, Auto">
         <Button Text="{x:Static common:IconFont.Settings}"
@@ -64,6 +67,7 @@
         </StackLayout>
         
         <controls:MTAdView
+                           IsVisible="{Binding IsPro, Converter={StaticResource NegateConverter}}"
                            Grid.Row="1"
                            HeightRequest="50"
                            Margin="0, 0, 0, -16"

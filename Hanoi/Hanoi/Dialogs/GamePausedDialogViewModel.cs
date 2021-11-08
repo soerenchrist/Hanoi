@@ -12,5 +12,12 @@ namespace Hanoi.Dialogs
             {
                 { "GoToMainMenu", true }
             }));
+
+        private DelegateCommand? _restartGame;
+        public DelegateCommand RestartGame => _restartGame ??= new DelegateCommand(
+            () => CloseWithParams.Execute(new DialogParameters()
+            {
+                { "RestartGame", true }
+            }));
     }
 }

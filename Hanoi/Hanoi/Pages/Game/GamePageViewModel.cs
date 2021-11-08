@@ -85,12 +85,12 @@ namespace Hanoi.Pages.Game
             if (parameters.ContainsKey("Discs"))
             {
                 var discCount = parameters.GetValue<int>("Discs");
-                GameLogic = new GameLogic(discCount);
+                StartNewGame(discCount);
             } 
             else if (parameters.ContainsKey("SavedGame"))
             {
                 var savedGame = parameters.GetValue<SavedGame>("SavedGame");
-                GameLogic = new GameLogic(savedGame);
+                LoadGame(savedGame);
             }
             else
             {
@@ -98,12 +98,27 @@ namespace Hanoi.Pages.Game
                 return;
             }
 
+            base.OnNavigatedTo(parameters);
+        }
+
+        private void StartNewGame(int discCount)
+        {
+            GameLogic = new GameLogic(discCount);
             _dataService.CurrentGame = GameLogic;
             GameLogic.WhenAnyValue(x => x.GameWon)
                 .Where(x => x)
                 .Do(_ => GameWon())
                 .Subscribe();
-            base.OnNavigatedTo(parameters);
+        }
+
+        private void LoadGame(SavedGame savedGame)
+        {
+            GameLogic = new GameLogic(savedGame);
+            _dataService.CurrentGame = GameLogic;
+            GameLogic.WhenAnyValue(x => x.GameWon)
+                .Where(x => x)
+                .Do(_ => GameWon())
+                .Subscribe();
         }
 
         public override void OnNavigatedFrom(INavigationParameters parameters)
@@ -126,6 +141,12 @@ namespace Hanoi.Pages.Game
                 await NavigationService.GoBackAsync();
                 return;
             }
+
+            if (result.Parameters.ContainsKey("RestartGame"))
+            {
+                StartNewGame(GameLogic!.NumberOfDiscs);
+            }
+
             GameLogic?.Stopwatch.Start();
         }
 

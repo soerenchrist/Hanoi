@@ -21,6 +21,10 @@
                 Command="{Binding Close}"
                 WidthRequest="250"
                 HorizontalOptions="Center"/>
+            <Button Text="Restart game"
+                Command="{Binding RestartGame}"
+                WidthRequest="250"
+                HorizontalOptions="Center"/>
 
             <Button Text="To main menu"
                 HorizontalOptions="Center"

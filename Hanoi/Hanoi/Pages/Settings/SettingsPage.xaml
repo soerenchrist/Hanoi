@@ -16,7 +16,8 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="{StaticResource PagePadding}">
+            <StackLayout Padding="{StaticResource PagePadding}"
+                         Spacing="12">
                 <Button Style="{StaticResource IconButton}"
                     Text="{x:Static common:IconFont.Close}"
                     HorizontalOptions="End"
@@ -31,6 +32,8 @@
                         IsToggled="{Binding GameSettings.ShowDiscNumbers}" />
                 </Grid>
 
+                <Label Text="Themes"
+                       FontSize="Medium" />
                 <Grid ColumnDefinitions="120, 120, 120, 120"
                       HeightRequest="80">
                     <controls:ThemeDisplay Theme="{x:Static theme:GameTheme.Blue}"

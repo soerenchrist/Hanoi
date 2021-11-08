@@ -31,6 +31,16 @@
                     <DataTemplate x:DataType="x:Int32">
                         <Grid WidthRequest="50"
                               HeightRequest="50">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal" />
+                                    <VisualState Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="{DynamicResource AccentColor}" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
                             <Label Text="{Binding .}"
                                    HorizontalOptions="Center"
                                    VerticalOptions="Center" />

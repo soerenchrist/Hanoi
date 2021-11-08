@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Hanoi.Themes.RainbowTheme">
+    <Color x:Key="BackgroundColor">#eeeeee</Color>
+    <Color x:Key="ButtonBackgroundColor">#cccccc</Color>
+    <Color x:Key="TextColor">#333333</Color>
+    <Color x:Key="AccentColor">#fbc02d</Color>
+
+    <Color x:Key="Disc0">#e6261f</Color>
+    <Color x:Key="Disc1">#eb7532</Color>
+    <Color x:Key="Disc2">#f7d038</Color>
+    <Color x:Key="Disc3">#a3e048</Color>
+    <Color x:Key="Disc4">#49da9a</Color>
+    <Color x:Key="Disc5">#34bbe6</Color>
+    <Color x:Key="Disc6">#4355db</Color>
+    <Color x:Key="Disc7">#d23be7</Color>
+
+</ResourceDictionary>

@@ -2,6 +2,6 @@
 {
     public enum GameTheme
     {
-        Blue, Red, BlackWhite, Light
+        Blue, Red, BlackWhite, Light, Rainbow
     }
 }

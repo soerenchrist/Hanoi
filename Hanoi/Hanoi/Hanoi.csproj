@@ -40,6 +40,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Themes\RainbowTheme.xaml.cs">
+      <DependentUpon>RainbowTheme.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Themes\LightTheme.xaml.cs">
       <DependentUpon>LightTheme.xaml</DependentUpon>
     </Compile>

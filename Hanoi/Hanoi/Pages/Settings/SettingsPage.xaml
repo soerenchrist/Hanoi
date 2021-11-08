@@ -34,7 +34,7 @@
 
                 <Label Text="Themes"
                        FontSize="Medium" />
-                <Grid ColumnDefinitions="120, 120, 120, 120"
+                <Grid ColumnDefinitions="120, 120, 120, 120, 120"
                       HeightRequest="80">
                     <controls:ThemeDisplay Theme="{x:Static theme:GameTheme.Blue}"
                                        NumberOfDiscs="4"
@@ -56,6 +56,11 @@
                                        SelectedTheme="{Binding SelectedTheme}"
                                        Command="{Binding SetTheme}"
                                        Grid.Column="3"/>
+                    <controls:ThemeDisplay Theme="{x:Static theme:GameTheme.Rainbow}"
+                                       NumberOfDiscs="4"
+                                       SelectedTheme="{Binding SelectedTheme}"
+                                       Command="{Binding SetTheme}"
+                                       Grid.Column="4"/>
                 </Grid>
                 <Button Text="Remove ads"
                     Command="{Binding Purchase}"

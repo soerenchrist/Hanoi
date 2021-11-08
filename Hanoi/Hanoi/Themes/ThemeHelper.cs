@@ -25,6 +25,7 @@ namespace Hanoi.Themes
                  GameTheme.Red => new RedTheme(),
                  GameTheme.BlackWhite => new BlackWhiteTheme(),
                  GameTheme.Light => new LightTheme(),
+                 GameTheme.Rainbow => new RainbowTheme(),
                  _ => new BaseTheme()
              };
 

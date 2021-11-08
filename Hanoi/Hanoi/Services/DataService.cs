@@ -96,7 +96,8 @@ namespace Hanoi.Services
         }
 
         public int GetTotalMoves()
-            => _db.Table<HighscoreItem>().Sum(x => x.MovesNeeded);
+            => _db.Table<HighscoreItem>().Sum(x => x.MovesNeeded)
+                + _db.Table<SavedGame>().Sum(x => x.MoveCount);
 
         public long GetFastestTime(int numberOfDiscs)
             => _db.Table<HighscoreItem>()

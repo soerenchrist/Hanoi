@@ -86,6 +86,13 @@ namespace Hanoi.Pages.Start
             IsPro = Preferences.Get("Pro", false);
             HasSavedGame = _dataService.HasSavedGame();
             TotalMoves = _dataService.GetTotalMoves();
+
+            if (_dataService.ShouldRequestStoreReview())
+            {
+                _dialogService.ShowDialog("RequestReview");
+                // if requesting a review, don't show an ad
+                return;
+            }
             
             if (parameters.GetNavigationMode() == Prism.Navigation.NavigationMode.Back)
             {

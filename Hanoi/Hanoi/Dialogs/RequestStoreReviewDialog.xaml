@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      xmlns:local="clr-namespace:Hanoi.Dialogs"
+      x:Class="Hanoi.Dialogs.RequestStoreReviewDialog"
+      x:DataType="local:RequestStoreReviewDialogViewModel"
+      WidthRequest="400">
+
+    <Frame 
+        BackgroundColor="{DynamicResource BackgroundColor}"
+        CornerRadius="12"
+        Padding="{StaticResource PagePadding}">
+        <Grid RowDefinitions="*, Auto"
+              ColumnDefinitions="*, *">
+            <Label 
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Text="I hope you have fun playing Hanoi - Speed Run. If you like the app, please leave me a store review. Thanks!" />
+
+            <Button Text="Close"
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Command="{Binding Close}" />
+
+            <Button Text="Review"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Command="{Binding Review}" />
+        </Grid>
+    </Frame>
+</Grid>

@@ -80,6 +80,14 @@ namespace Hanoi.Services
             });
         }
 
+        public bool ShouldRequestStoreReview()
+        {
+            if (Preferences.Get("HasReviewed", false))
+                return false;
+
+            return _db.Table<HighscoreItem>().Count() > 5;
+        }
+
         public bool ShouldShowAd()
         {
             if (Preferences.Get("Pro", false))

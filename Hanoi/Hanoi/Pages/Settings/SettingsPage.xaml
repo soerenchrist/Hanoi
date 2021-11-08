@@ -70,7 +70,7 @@
 
                 <Button Text="Toggle Pro"
                     IsVisible="{Binding IsPro, Converter={StaticResource IsDebugConverter}}" 
-                    Clicked="Button_Clicked"/>
+                    Clicked="Button_Clicked" />
 
                 <Frame CornerRadius="8"
                    BackgroundColor="{DynamicResource ButtonBackgroundColor}">

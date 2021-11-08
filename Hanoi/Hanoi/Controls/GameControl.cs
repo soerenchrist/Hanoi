@@ -122,7 +122,7 @@ namespace Hanoi.Controls
 
         protected override void OnTouch(SKTouchEventArgs e)
         {
-            if (GameLogic == null)
+            if (GameLogic == null || !GameRunning)
                 return;
             if (e.ActionType != SKTouchAction.Pressed)
                 return;

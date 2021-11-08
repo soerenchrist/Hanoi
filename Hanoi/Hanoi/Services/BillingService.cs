@@ -15,7 +15,7 @@ namespace Hanoi.Services
 
     public class BillingService : IBillingService
     {
-        private const string ProductId = "hanoipro";
+        private const string ProductId = "hanoi_pro";
 
         public BillingService()
         {

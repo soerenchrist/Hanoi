@@ -21,7 +21,7 @@
                 <Button Text="{x:Static common:IconFont.Settings}"
                         Grid.Column="0"
                         Grid.RowSpan="2"
-                        BackgroundColor="{DynamicResource BackgroundColro}"
+                        BackgroundColor="{DynamicResource BackgroundColor}"
                         IsVisible="{Binding GameRunning}"
                         HorizontalOptions="Start"
                         Style="{StaticResource IconButton}"

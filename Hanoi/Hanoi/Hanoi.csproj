@@ -41,6 +41,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Dialogs\AlertDialog.xaml.cs">
+      <DependentUpon>AlertDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Dialogs\ConfirmNewGameDialog.xaml.cs">
       <DependentUpon>ConfirmNewGameDialog.xaml</DependentUpon>
     </Compile>

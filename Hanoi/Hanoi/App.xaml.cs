@@ -47,6 +47,7 @@ namespace Hanoi
             containerRegistry.RegisterDialog<GamePausedDialog, GamePausedDialogViewModel>("GamePaused");
             containerRegistry.RegisterDialog<ConfirmNewGameDialog, ConfirmNewGameDialogViewModel>("ConfirmNewGame");
             containerRegistry.RegisterDialog<RequestStoreReviewDialog, RequestStoreReviewDialogViewModel>("RequestReview");
+            containerRegistry.RegisterDialog<AlertDialog, AlertDialogViewModel>("Alert");
 
             containerRegistry.Register<IBillingService, BillingService>();
         }

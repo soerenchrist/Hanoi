@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+      xmlns:dialogs="clr-namespace:Hanoi.Dialogs"
+      x:Class="Hanoi.Dialogs.AlertDialog"
+      WidthRequest="400"
+      x:DataType="dialogs:AlertDialogViewModel">
+    <Frame 
+        BackgroundColor="{DynamicResource BackgroundColor}"
+        CornerRadius="12"
+        Padding="{StaticResource PagePadding}">
+        <Grid 
+            RowDefinitions="*, Auto"
+            ColumnDefinitions="*, *"
+            RowSpacing="16">
+            <Label Text="{Binding Text}"
+                   HorizontalOptions="Center"
+                   Grid.ColumnSpan="2"
+                   />
+            <Button Text="{Binding ButtonText}"
+                    VerticalOptions="End"
+                    Command="{Binding Close}"
+                    Grid.Column="1"
+                    Grid.Row="1"/>
+        </Grid>
+    </Frame>
+</Grid>

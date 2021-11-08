@@ -2,10 +2,12 @@
 using Hanoi.Pages.Base;
 using Hanoi.Services;
 using Hanoi.Themes;
+using Hanoi.Util;
 using Plugin.InAppBilling;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
+using Prism.Services.Dialogs;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -42,14 +44,17 @@ namespace Hanoi.Pages.Settings
         public DelegateCommand SendMail => _sendMail ??= new DelegateCommand(ExecuteSendMail);
         public ReactiveCommand<GameTheme, Unit> SetTheme => _setTheme ??= ReactiveCommand.Create<GameTheme, Unit>(ExecuteSetTheme);
 
-        private IBillingService _billingService;
-        private IPageDialogService _pageDialogService;
+        private readonly IBillingService _billingService;
+        private readonly IPageDialogService _pageDialogService;
+        private readonly IDialogService _dialogService;
         public SettingsPageViewModel(INavigationService navigationService,
             IBillingService billingService,
-            IPageDialogService pageDialogService) : base(navigationService)
+            IPageDialogService pageDialogService,
+            IDialogService dialogService) : base(navigationService)
         {
             _billingService = billingService;
             _pageDialogService = pageDialogService;
+            _dialogService = dialogService;
         }
 
         public override void OnNavigatedTo(INavigationParameters parameters)
@@ -104,7 +109,10 @@ namespace Hanoi.Pages.Settings
             {
                 var restored = await _billingService.RestorePurchase();
                 if (restored)
+                {
+                    await _dialogService.ShowAlertAsync("Your purchase has been restored. Thank you!", "Close");
                     return;
+                }
             }
             catch (Exception)
             {
@@ -117,6 +125,7 @@ namespace Hanoi.Pages.Settings
                 if (purchased)
                 {
                     IsPro = true;
+                    await _dialogService.ShowAlertAsync("Your purchase was successful. Thank you!", "Close");
                 }
             }
             catch (Exception ex)

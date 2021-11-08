@@ -16,7 +16,12 @@ namespace Hanoi.Pages.Start
     {
         private const int MinDiscs = 3;
         private const int MaxDiscs = 20;
-        public bool IsPro => Preferences.Get("Pro", false);
+        private bool _isPro;
+        public bool IsPro
+        {
+            get => _isPro;
+            private set => this.RaiseAndSetIfChanged(ref _isPro, value);
+        }
 
         private string? _bannerAdId;
         public string BannerAdId => _bannerAdId ??= AdUtil.GetBannerAdId();
@@ -32,7 +37,7 @@ namespace Hanoi.Pages.Start
         public bool HasSavedGame
         {
             get => _hasSavedGame;
-            set => this.RaiseAndSetIfChanged(ref _hasSavedGame, value);
+            private set => this.RaiseAndSetIfChanged(ref _hasSavedGame, value);
         }
 
         private readonly ObservableAsPropertyHelper<string> _discsText;
@@ -66,6 +71,7 @@ namespace Hanoi.Pages.Start
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
+            IsPro = Preferences.Get("Pro", false);
             HasSavedGame =  _dataService.HasSavedGame();
             
             if (parameters.GetNavigationMode() == Prism.Navigation.NavigationMode.Back)

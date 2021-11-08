@@ -6,7 +6,6 @@ using Prism;
 using Prism.Ioc;
 using Hanoi.Services;
 using Android.Content;
-using Android.Gms.Auth.Api.SignIn;
 using Android.Gms.Ads;
 
 namespace Hanoi.Droid

@@ -7,6 +7,8 @@ using Prism.Navigation;
 using Prism.Services;
 using ReactiveUI;
 using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 
@@ -22,8 +24,12 @@ namespace Hanoi.Pages.Settings
             set => this.RaiseAndSetIfChanged(ref _isPro, value);
         }
 
+        public string Version => VersionTracking.CurrentVersion;
+
         private DelegateCommand? _purchase;
+        private DelegateCommand? _sendMail;
         public DelegateCommand Purchase => _purchase ??= new DelegateCommand(ExecutePurchase);
+        public DelegateCommand SendMail => _sendMail ??= new DelegateCommand(ExecuteSendMail);
 
         private IBillingService _billingService;
         private IPageDialogService _pageDialogService;
@@ -34,6 +40,33 @@ namespace Hanoi.Pages.Settings
             _billingService = billingService;
             _pageDialogService = pageDialogService;
             IsPro = Preferences.Get("Pro", false);
+        }
+
+        private async void ExecuteSendMail()
+        {
+            try
+            {
+                var info = new StringBuilder();
+                info.AppendLine($"Version: {Version}");
+                info.AppendLine($"Platform: {DeviceInfo.Platform.ToString()}");
+                info.AppendLine($"OS Version: {DeviceInfo.VersionString}");
+                info.AppendLine($"Manufacturer: {DeviceInfo.Manufacturer}");
+                info.AppendLine($"Model: {DeviceInfo.Model}");
+                info.AppendLine();
+                info.AppendLine($"Please describe your issue in detail here:");
+                var message = new EmailMessage
+                {
+                    Subject = $"Issue with Hanoi - Speed Run",
+                    Body = info.ToString(),
+                    To = new List<string> { "s.christ@mailbox.org" }
+                };
+
+                await Email.ComposeAsync(message);
+            }
+            catch (Exception)
+            {
+                await _pageDialogService.DisplayAlertAsync("Error", "Could not send mail. Please contact s.christ@mailbox.org directly", "Ok");
+            }
         }
 
         private async void ExecutePurchase()

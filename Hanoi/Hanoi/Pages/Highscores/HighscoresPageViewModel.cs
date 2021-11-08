@@ -20,7 +20,12 @@ namespace Hanoi.Pages.Highscores
         private string? _bannerAdId;
         public string BannerAdId => _bannerAdId ??= AdUtil.GetBannerAdId();
 
-        public bool IsPro => Preferences.Get("Pro", false);
+        private bool _isPro;
+        public bool IsPro
+        {
+            get => _isPro;
+            private set => this.RaiseAndSetIfChanged(ref _isPro, value);
+        }
 
         public List<int> DiscSizes { get; } = new List<int>();
 
@@ -70,6 +75,7 @@ namespace Hanoi.Pages.Highscores
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
+            IsPro = Preferences.Get("Pro", false);
             if (parameters.ContainsKey("NumberOfDiscs"))
             {
                 SelectedDiscSizeIndex = parameters.GetValue<int>("NumberOfDiscs");

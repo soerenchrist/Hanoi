@@ -35,6 +35,25 @@
             <Button Text="Toggle Pro"
                     IsVisible="{Binding IsPro, Converter={StaticResource IsDebugConverter}}" 
                     Clicked="Button_Clicked"/>
+
+            <Frame CornerRadius="8"
+                   BackgroundColor="Black">
+                <StackLayout Spacing="12">
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Hanoi - Speed Run " />
+                                <Span Text="{Binding Version}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label Text="If you have any issues with the game, feel free to contact me:" />
+
+                    <Button Text="Get support"
+                            Command="{Binding SendMail}" />
+                </StackLayout>
+            </Frame>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

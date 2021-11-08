@@ -20,14 +20,11 @@
 
                 <Button Text="{x:Static common:IconFont.Settings}"
                         Grid.Column="0"
-                        FontFamily="MaterialIcons"
-                        BackgroundColor="Transparent"
                         Grid.RowSpan="2"
-                        FontSize="Large"
+                        BackgroundColor="{DynamicResource BackgroundColro}"
                         IsVisible="{Binding GameRunning}"
-                        Padding="0"
-                        WidthRequest="50"
-                        HorizontalOptions="Start" 
+                        HorizontalOptions="Start"
+                        Style="{StaticResource IconButton}"
                         Command="{Binding Pause}"/>
 
                 <Label HorizontalOptions="End" 

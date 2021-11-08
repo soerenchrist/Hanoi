@@ -7,6 +7,7 @@ using Prism.Ioc;
 using Hanoi.Services;
 using Android.Content;
 using Android.Gms.Ads;
+using Android.Views;
 
 namespace Hanoi.Droid
 {
@@ -19,7 +20,8 @@ namespace Hanoi.Droid
         {
             base.OnCreate(savedInstanceState);
 
-            this.Window.AddFlags(Android.Views.WindowManagerFlags.Fullscreen);
+            Window.AddFlags(Android.Views.WindowManagerFlags.Fullscreen);
+            Window.AddFlags(Android.Views.WindowManagerFlags.KeepScreenOn);
 
             MobileAds.Initialize(this);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);

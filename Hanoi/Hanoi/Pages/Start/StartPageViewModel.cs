@@ -89,7 +89,7 @@ namespace Hanoi.Pages.Start
 
             if (_dataService.ShouldRequestStoreReview())
             {
-                _dialogService.ShowDialog("RequestReview");
+                _dialogService.ShowDialogAsync("RequestReview");
                 // if requesting a review, don't show an ad
                 return;
             }

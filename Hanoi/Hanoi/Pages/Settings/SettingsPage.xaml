@@ -6,54 +6,82 @@
              x:DataType="settings:SettingsPageViewModel"
              xmlns:common="clr-namespace:Hanoi.Common" 
              xmlns:converters="clr-namespace:Hanoi.Converters"
-             BackgroundColor="{StaticResource BackgroundColor}"
+             xmlns:controls="clr-namespace:Hanoi.Controls"
+             xmlns:theme="clr-namespace:Hanoi.Themes"
+             BackgroundColor="{DynamicResource BackgroundColor}"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <converters:NegateConverter x:Key="NegateConverter" />
         <converters:IsDebugConverter x:Key="IsDebugConverter" />
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout Padding="{StaticResource PagePadding}">
-            <Button Style="{StaticResource IconButton}"
+        <ScrollView>
+            <StackLayout Padding="{StaticResource PagePadding}">
+                <Button Style="{StaticResource IconButton}"
                     Text="{x:Static common:IconFont.Close}"
                     HorizontalOptions="End"
                     Command="{Binding GoBack}"/>
 
-            <Grid ColumnDefinitions="*, Auto">
-                <Label Text="Show numbers on discs"
+                <Grid ColumnDefinitions="*, Auto">
+                    <Label Text="Show numbers on discs"
                        VerticalOptions="Center"/>
 
-                <Switch Grid.Column="1"
+                    <Switch Grid.Column="1"
                         VerticalOptions="Center"
                         IsToggled="{Binding GameSettings.ShowDiscNumbers}" />
-            </Grid>
+                </Grid>
 
-            <Button Text="Remove ads"
+                <Grid ColumnDefinitions="120, 120, 120, 120"
+                      HeightRequest="80">
+                    <controls:ThemeDisplay Theme="{x:Static theme:GameTheme.Blue}"
+                                       NumberOfDiscs="4"
+                                       SelectedTheme="{Binding SelectedTheme}"
+                                       Command="{Binding SetTheme}" />
+                    <controls:ThemeDisplay Theme="{x:Static theme:GameTheme.Red}"
+                                       NumberOfDiscs="4"
+                                       SelectedTheme="{Binding SelectedTheme}"
+                                       Command="{Binding SetTheme}"
+                                       Grid.Column="1"/>
+
+                    <controls:ThemeDisplay Theme="{x:Static theme:GameTheme.BlackWhite}"
+                                       NumberOfDiscs="4"
+                                       SelectedTheme="{Binding SelectedTheme}"
+                                       Command="{Binding SetTheme}"
+                                       Grid.Column="2"/>
+                    <controls:ThemeDisplay Theme="{x:Static theme:GameTheme.Light}"
+                                       NumberOfDiscs="4"
+                                       SelectedTheme="{Binding SelectedTheme}"
+                                       Command="{Binding SetTheme}"
+                                       Grid.Column="3"/>
+                </Grid>
+                <Button Text="Remove ads"
                     Command="{Binding Purchase}"
                     IsVisible="{Binding IsPro, Converter={StaticResource NegateConverter}}" />
 
-            <Button Text="Toggle Pro"
+                <Button Text="Toggle Pro"
                     IsVisible="{Binding IsPro, Converter={StaticResource IsDebugConverter}}" 
                     Clicked="Button_Clicked"/>
 
-            <Frame CornerRadius="8"
-                   BackgroundColor="Black">
-                <StackLayout Spacing="12">
-                    <Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="Hanoi - Speed Run " />
-                                <Span Text="{Binding Version}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                <Frame CornerRadius="8"
+                   BackgroundColor="{DynamicResource ButtonBackgroundColor}">
+                    <StackLayout Spacing="12">
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Hanoi - Speed Run " />
+                                    <Span Text="{Binding Version}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
 
-                    <Label Text="If you have any issues with the game, feel free to contact me:" />
+                        <Label Text="If you have any issues with the game, feel free to contact me:" />
 
-                    <Button Text="Get support"
-                            Command="{Binding SendMail}" />
-                </StackLayout>
-            </Frame>
-        </StackLayout>
+                        <Button Text="Get support"
+                            Command="{Binding SendMail}"
+                            BackgroundColor="{DynamicResource BackgroundColor}"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

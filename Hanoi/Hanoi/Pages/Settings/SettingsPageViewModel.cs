@@ -1,6 +1,7 @@
 ﻿using Hanoi.Logic;
 using Hanoi.Pages.Base;
 using Hanoi.Services;
+using Hanoi.Themes;
 using Plugin.InAppBilling;
 using Prism.Commands;
 using Prism.Navigation;
@@ -8,6 +9,7 @@ using Prism.Services;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -24,12 +26,21 @@ namespace Hanoi.Pages.Settings
             set => this.RaiseAndSetIfChanged(ref _isPro, value);
         }
 
+        private GameTheme _selectedTheme;
+        public GameTheme SelectedTheme
+        {
+            get => _selectedTheme;
+            set => this.RaiseAndSetIfChanged(ref _selectedTheme, value);
+        }
+
         public string Version => VersionTracking.CurrentVersion;
 
         private DelegateCommand? _purchase;
         private DelegateCommand? _sendMail;
+        private ReactiveCommand<GameTheme, Unit>? _setTheme;
         public DelegateCommand Purchase => _purchase ??= new DelegateCommand(ExecutePurchase);
         public DelegateCommand SendMail => _sendMail ??= new DelegateCommand(ExecuteSendMail);
+        public ReactiveCommand<GameTheme, Unit> SetTheme => _setTheme ??= ReactiveCommand.Create<GameTheme, Unit>(ExecuteSetTheme);
 
         private IBillingService _billingService;
         private IPageDialogService _pageDialogService;
@@ -39,7 +50,13 @@ namespace Hanoi.Pages.Settings
         {
             _billingService = billingService;
             _pageDialogService = pageDialogService;
+        }
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
             IsPro = Preferences.Get("Pro", false);
+            SelectedTheme = ThemeHelper.CurrentTheme;
         }
 
         private async void ExecuteSendMail()
@@ -67,6 +84,14 @@ namespace Hanoi.Pages.Settings
             {
                 await _pageDialogService.DisplayAlertAsync("Error", "Could not send mail. Please contact s.christ@mailbox.org directly", "Ok");
             }
+        }
+
+        private Unit ExecuteSetTheme(GameTheme theme)
+        {
+            ThemeHelper.ChangeTheme(theme);
+            SelectedTheme = theme;
+
+            return Unit.Default;
         }
 
         private async void ExecutePurchase()

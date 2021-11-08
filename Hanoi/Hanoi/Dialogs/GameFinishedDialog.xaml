@@ -5,61 +5,62 @@
       xmlns:dialogs="clr-namespace:Hanoi.Dialogs"
       xmlns:common="clr-namespace:Hanoi.Common"
       x:Class="Hanoi.Dialogs.GameFinishedDialog"
-      RowDefinitions="Auto, Auto, Auto, Auto"
-      ColumnDefinitions="*, Auto"
       WidthRequest="400"
-      HeightRequest="300"
-      x:DataType="dialogs:GameFinishedDialogViewModel"
-      Padding="{StaticResource PagePadding}">
+      x:DataType="dialogs:GameFinishedDialogViewModel">
     <Grid.Resources>
         <converters:MillisecondsToTimeConverter x:Key="TimeConverter" />
     </Grid.Resources>
 
-    <Frame CornerRadius="12"
-           BackgroundColor="Black"
-           Grid.ColumnSpan="2"
-           Grid.RowSpan="4" />
+    <Frame 
+        BackgroundColor="{DynamicResource BackgroundColor}"
+        CornerRadius="12"
+        Padding="{StaticResource PagePadding}">
 
-    <Label FontSize="Large"
-           Text="You did it!"
-           Grid.Column="0"
-           VerticalOptions="Center"
-           HorizontalOptions="Center"
-           Grid.ColumnSpan="2"
-           />
-    <Button Text="{x:Static common:IconFont.Close}"
-            FontSize="Large"
-            BackgroundColor="Black"
-            FontFamily="MaterialIcons"
-            Grid.Column="1"
-            Command="{Binding Close}" />
+        <Grid 
+            RowDefinitions="Auto, Auto, Auto, Auto"
+            ColumnDefinitions="*, Auto">
+            <Label FontSize="Large"
+               Text="You did it!"
+               Grid.Column="0"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Grid.ColumnSpan="2"
+               />
+            <Button Text="{x:Static common:IconFont.Close}"
+                FontSize="Large"
+                BackgroundColor="{DynamicResource BackgroundColor}"
+                FontFamily="MaterialIcons"
+                Grid.Column="1"
+                Command="{Binding Close}" />
 
-    <Label Grid.Column="0"
-           Grid.Row="1"
-           Grid.ColumnSpan="2"
-           Margin="10"
-           HorizontalOptions="Center">
-        <Label.FormattedText>
-            <FormattedString>
-                <Span Text="Your time: " />
-                <Span Text="{Binding Time, Converter={StaticResource TimeConverter}}" />
-            </FormattedString>
-        </Label.FormattedText>
-    </Label>
-    <Label Grid.ColumnSpan="2"
-           Grid.Row="2"
-           HorizontalOptions="Center"
-           FontAttributes="Bold"
-           Margin="10"
-           Text="It's a new Highscore!"
-           IsVisible="{Binding HighScore}" />
-    <Grid Grid.Row="3"
-          Grid.ColumnSpan="2"
-          ColumnDefinitions="*, *">
-        <Button Text="Show highscores"
-                Command="{Binding ShowHighscores}"/>
-        <Button Text="Close"
-                Command="{Binding Close}"
-                Grid.Column="1"/>
-    </Grid>
+            <Label Grid.Column="0"
+               Grid.Row="1"
+               Grid.ColumnSpan="2"
+               Margin="10"
+               HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Your time: " />
+                        <Span Text="{Binding Time, Converter={StaticResource TimeConverter}}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label Grid.ColumnSpan="2"
+               Grid.Row="2"
+               HorizontalOptions="Center"
+               FontAttributes="Bold"
+               Margin="10"
+               Text="It's a new Highscore!"
+               IsVisible="{Binding HighScore}" />
+            <Grid Grid.Row="3"
+              Grid.ColumnSpan="2"
+              ColumnDefinitions="*, *">
+                <Button Text="Show highscores"
+                    Command="{Binding ShowHighscores}"/>
+                <Button Text="Close"
+                    Command="{Binding Close}"
+                    Grid.Column="1"/>
+            </Grid>
+        </Grid>
+    </Frame>
 </Grid>

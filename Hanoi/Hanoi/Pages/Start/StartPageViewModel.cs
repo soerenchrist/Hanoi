@@ -1,5 +1,6 @@
 ﻿using Hanoi.Pages.Base;
 using Hanoi.Services;
+using Hanoi.Themes;
 using Hanoi.Util;
 using MarcTron.Plugin;
 using Prism.Commands;

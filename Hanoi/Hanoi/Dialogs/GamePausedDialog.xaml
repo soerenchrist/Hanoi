@@ -1,20 +1,31 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<StackLayout xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:dialogs="clr-namespace:Hanoi.Dialogs"
-             x:Class="Hanoi.Dialogs.GamePausedDialog"
-             x:DataType="dialogs:GamePausedDialogViewModel"
-             WidthRequest="400"
-             BackgroundColor="Black"
-             Padding="{StaticResource PagePadding}">
+<Grid 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:dialogs="clr-namespace:Hanoi.Dialogs"
+    x:Class="Hanoi.Dialogs.GamePausedDialog"
+    x:DataType="dialogs:GamePausedDialogViewModel"
+    WidthRequest="400">
+    <Frame 
+        BackgroundColor="{DynamicResource BackgroundColor}"
+        CornerRadius="12"
+        Padding="{StaticResource PagePadding}">
+        <StackLayout>
 
-    <Button Text="Continue"
-            Command="{Binding Close}"
-            WidthRequest="250"
-            HorizontalOptions="Center"/>
+            <Label FontSize="Large"
+               Text="Game paused"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               />
+            <Button Text="Continue"
+                Command="{Binding Close}"
+                WidthRequest="250"
+                HorizontalOptions="Center"/>
 
-    <Button Text="To main menu"
-            HorizontalOptions="Center"
-            WidthRequest="250"
-            Command="{Binding GoToMainMenu}" />
-</StackLayout>
+            <Button Text="To main menu"
+                HorizontalOptions="Center"
+                WidthRequest="250"
+                Command="{Binding GoToMainMenu}" />
+        </StackLayout>
+    </Frame>
+</Grid>

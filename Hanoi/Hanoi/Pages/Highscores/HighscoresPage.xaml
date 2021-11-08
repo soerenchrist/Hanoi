@@ -5,9 +5,10 @@
              xmlns:converters="clr-namespace:Hanoi.Converters"
              xmlns:viewmodels="clr-namespace:Hanoi.ViewModels"
              NavigationPage.HasNavigationBar="False"
-             xmlns:common="clr-namespace:Hanoi.Common" xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
+             xmlns:common="clr-namespace:Hanoi.Common" 
+             xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
              x:Class="Hanoi.Pages.Highscores.HighscoresPage"
-             BackgroundColor="{StaticResource BackgroundColor}"
+             BackgroundColor="{DynamicResource BackgroundColor}"
              x:DataType="highscores:HighscoresPageViewModel">
     <ContentPage.Resources>
         <converters:MillisecondsToTimeConverter x:Key="TimeConverter" />

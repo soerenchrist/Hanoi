@@ -4,6 +4,7 @@ using Hanoi.Pages.Highscores;
 using Hanoi.Pages.Settings;
 using Hanoi.Pages.Start;
 using Hanoi.Services;
+using Hanoi.Themes;
 using Prism;
 using Prism.Ioc;
 using System.Diagnostics;
@@ -21,6 +22,8 @@ namespace Hanoi
         protected override async void OnInitialized()
         {
             InitializeComponent();
+            var theme = ThemeHelper.LoadTheme();
+            ThemeHelper.ChangeTheme(theme);
 
             var result = await NavigationService.NavigateAsync("Nav/Start");
             if (!result.Success && Debugger.IsAttached)

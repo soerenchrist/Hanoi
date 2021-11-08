@@ -42,7 +42,8 @@ namespace Hanoi.Controls
         private readonly SKPaint _stickPaint = new()
         {
             Style = SKPaintStyle.Fill,
-            Color = SKColors.DarkGray
+            Color = SKColors.DarkGray,
+            IsAntialias = true
         };
         private readonly SKPaint _textPaint = new()
         {
@@ -52,7 +53,8 @@ namespace Hanoi.Controls
         };
         private readonly SKPaint _discPaint = new()
         {
-            Style = SKPaintStyle.Fill
+            Style = SKPaintStyle.Fill,
+            IsAntialias = true
         };
 
         private readonly float[] _stickPositions = new float[3];

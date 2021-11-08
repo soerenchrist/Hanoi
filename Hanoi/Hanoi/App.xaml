@@ -13,9 +13,6 @@
             <Color x:Key="TextColor">#eeeeee</Color>
             <Color x:Key="AccentColor">#fbc02d</Color>
 
-            <x:String x:Key="BannerAdId">ca-app-pub-1335254545849085/7950494900</x:String>
-            <x:String x:Key="InterstitialAdId">ca-app-pub-1335254545849085/8589321983</x:String>
-
             <Color x:Key="Disc0">#3c505c</Color>
             <Color x:Key="Disc1">#236471</Color>
             <Color x:Key="Disc2">#007878</Color>
@@ -25,8 +22,12 @@
             <Color x:Key="Disc6">#b9ab00</Color>
             <Color x:Key="Disc7">#ffa600</Color>
 
+            <x:String x:Key="BannerAdId">ca-app-pub-1335254545849085/7950494900</x:String>
+            <x:String x:Key="InterstitialAdId">ca-app-pub-1335254545849085/8589321983</x:String>
+
+
             <Style TargetType="Entry">
-                <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+                <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
                 <Setter Property="FontFamily" Value="Inconsolata" />
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList x:Name="CommonStates">
@@ -34,7 +35,7 @@
                             <VisualState x:Name="Normal" />
                             <VisualState x:Name="Disabled">
                                 <VisualState.Setters>
-                                    <Setter Property="TextColor" Value="#eeeeee" />
+                                    <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
@@ -43,22 +44,22 @@
             </Style>
 
             <Style TargetType="Label">
-                <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+                <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
                 <Setter Property="FontFamily" Value="Inconsolata" />
             </Style>
             <Style TargetType="Button">
-                <Setter Property="BackgroundColor" Value="{StaticResource ButtonBackgroundColor}" />
-                <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+                <Setter Property="BackgroundColor" Value="{DynamicResource ButtonBackgroundColor}" />
+                <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
                 <Setter Property="FontFamily" Value="Inconsolata" />
             </Style>
 
             <Style TargetType="Button" x:Key="IconButton">
-                <Setter Property="TextColor" Value="{StaticResource TextColor}" />
+                <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
                 <Setter Property="FontFamily" Value="MaterialIcons" />
                 <Setter Property="WidthRequest" Value="50" />
                 <Setter Property="FontSize" Value="Large" />
                 <Setter Property="Padding" Value="0" />
-                <Setter Property="BackgroundColor" Value="{StaticResource BackgroundColor}" />
+                <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

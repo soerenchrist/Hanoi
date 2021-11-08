@@ -5,6 +5,7 @@ using Hanoi.Util;
 using MarcTron.Plugin;
 using Prism.Commands;
 using Prism.Navigation;
+using Prism.Services.Dialogs;
 using ReactiveUI;
 using System;
 using System.Diagnostics;
@@ -59,10 +60,13 @@ namespace Hanoi.Pages.Start
         public DelegateCommand ResumeGame => _resumeGame ??= new DelegateCommand(ExecuteResumeGame);
 
         private readonly DataService _dataService;
+        private readonly IDialogService _dialogService;
 
         public StartPageViewModel(INavigationService navigationService,
-            DataService dataService) : base(navigationService)
+            DataService dataService,
+            IDialogService dialogService) : base(navigationService)
         {
+            _dialogService = dialogService;
             _dataService = dataService;
             _discsText = this.WhenAnyValue(x => x.NumberOfDiscs)
                 .Select(x => $"{x} discs")
@@ -107,8 +111,17 @@ namespace Hanoi.Pages.Start
                 Debugger.Break();
         }
 
-        private void ExecuteStartGame()
+        private async void ExecuteStartGame()
         {
+            if (HasSavedGame)
+            {
+                var result = await _dialogService.ShowDialogAsync("ConfirmNewGame");
+                if (!result.Parameters.ContainsKey("NewGame"))
+                {
+                    return;
+                }
+            }
+
             Navigate.Execute($"Game?Discs={NumberOfDiscs}");
         }
     }

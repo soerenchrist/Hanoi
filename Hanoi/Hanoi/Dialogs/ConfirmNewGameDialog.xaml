@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+      xmlns:dialogs="clr-namespace:Hanoi.Dialogs"
+      x:Class="Hanoi.Dialogs.ConfirmNewGameDialog"
+      WidthRequest="400"
+      x:DataType="dialogs:ConfirmNewGameDialogViewModel">
+    <Frame 
+        BackgroundColor="{DynamicResource BackgroundColor}"
+        CornerRadius="12"
+        Padding="{StaticResource PagePadding}">
+        <Grid 
+            RowDefinitions="Auto, Auto"
+            ColumnDefinitions="*, *"
+            RowSpacing="16">
+            <Label Text="Your saved progress of the previous game will be lost. Are your sure you want to continue?"
+                   HorizontalOptions="Center"
+                   Grid.ColumnSpan="2"
+                   />
+                <Button 
+                    Text="Cancel"
+                    VerticalOptions="End"
+                    Command="{Binding Close}"
+                    Grid.Row="1"/>
+            <Button Text="New Game"
+                    VerticalOptions="End"
+                    Command="{Binding NewGame}"
+                    Grid.Column="1"
+                    Grid.Row="1"/>
+        </Grid>
+    </Frame>
+</Grid>

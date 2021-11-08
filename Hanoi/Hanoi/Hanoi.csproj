@@ -40,6 +40,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Dialogs\ConfirmNewGameDialog.xaml.cs">
+      <DependentUpon>ConfirmNewGameDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Themes\RainbowTheme.xaml.cs">
       <DependentUpon>RainbowTheme.xaml</DependentUpon>
     </Compile>

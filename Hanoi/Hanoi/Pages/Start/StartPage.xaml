@@ -12,13 +12,6 @@
     </ContentPage.Resources>
     <Grid Padding="{StaticResource PagePadding}"
           RowDefinitions="*, Auto">
-        <Button Text="{x:Static common:IconFont.Settings}"
-                Style="{StaticResource IconButton}"
-                Command="{Binding Navigate}"
-                Grid.Row="0"
-                CommandParameter="Settings?useModalNavigation=true"
-                HorizontalOptions="End"
-                VerticalOptions="Start"/>
         <StackLayout VerticalOptions="Center"
                      Grid.Row="0">
 
@@ -65,7 +58,15 @@
                     Command="{Binding Navigate}"
                     CommandParameter="Highscores?useModalNavigation=true" />
         </StackLayout>
-        
+
+        <Button Text="{x:Static common:IconFont.Settings}"
+                Style="{StaticResource IconButton}"
+                Command="{Binding Navigate}"
+                Grid.Row="0"
+                CommandParameter="Settings?useModalNavigation=true"
+                HorizontalOptions="End"
+                VerticalOptions="Start"/>
+
         <controls:MTAdView
                            IsVisible="{Binding IsPro, Converter={StaticResource NegateConverter}}"
                            Grid.Row="1"

@@ -13,7 +13,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid Padding="{StaticResource PagePadding}"
-              RowDefinitions="Auto, *">
+              RowDefinitions="80, *">
 
             <Grid ColumnDefinitions="*, Auto"
                   RowDefinitions="Auto, Auto">
@@ -24,6 +24,7 @@
                         BackgroundColor="Transparent"
                         Grid.RowSpan="2"
                         FontSize="Large"
+                        IsVisible="{Binding GameRunning}"
                         Padding="0"
                         WidthRequest="50"
                         HorizontalOptions="Start" 
@@ -32,10 +33,12 @@
                 <Label HorizontalOptions="End" 
                    Text="{Binding ElapsedTime}"
                    Grid.Column="1"
+                   IsVisible="{Binding GameRunning}"
                    FontSize="Medium" />
                 <Label HorizontalOptions="End"
                        Grid.Column="1"
                        Grid.Row="1"
+                       IsVisible="{Binding GameRunning}"
                        FontSize="Medium">
                     <Label.FormattedText>
                         <FormattedString>
@@ -50,7 +53,8 @@
                    FontSize="80"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
-                   Grid.Row="1"
+                   Grid.Row="0"
+                   Grid.RowSpan="2"
                    IsVisible="{Binding GameRunning, Converter={StaticResource NegateConverter}}"/>
 
 

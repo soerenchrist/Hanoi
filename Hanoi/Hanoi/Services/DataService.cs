@@ -3,6 +3,7 @@ using Hanoi.Models;
 using SQLite;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Xamarin.Essentials;
 
 namespace Hanoi.Services
@@ -93,6 +94,9 @@ namespace Hanoi.Services
 
             return false;
         }
+
+        public int GetTotalMoves()
+            => _db.Table<HighscoreItem>().Sum(x => x.MovesNeeded);
 
         public long GetFastestTime(int numberOfDiscs)
             => _db.Table<HighscoreItem>()

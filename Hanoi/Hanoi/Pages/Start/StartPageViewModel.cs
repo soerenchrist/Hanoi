@@ -25,6 +25,13 @@ namespace Hanoi.Pages.Start
             private set => this.RaiseAndSetIfChanged(ref _isPro, value);
         }
 
+        private int _totalMoves;
+        public int TotalMoves
+        {
+            get => _totalMoves;
+            private set => this.RaiseAndSetIfChanged(ref _totalMoves, value);
+        }
+
         private string? _bannerAdId;
         public string BannerAdId => _bannerAdId ??= AdUtil.GetBannerAdId();
 
@@ -77,7 +84,8 @@ namespace Hanoi.Pages.Start
         {
             base.OnNavigatedTo(parameters);
             IsPro = Preferences.Get("Pro", false);
-            HasSavedGame =  _dataService.HasSavedGame();
+            HasSavedGame = _dataService.HasSavedGame();
+            TotalMoves = _dataService.GetTotalMoves();
             
             if (parameters.GetNavigationMode() == Prism.Navigation.NavigationMode.Back)
             {

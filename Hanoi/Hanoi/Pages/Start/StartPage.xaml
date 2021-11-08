@@ -82,7 +82,7 @@
                            IsVisible="{Binding IsPro, Converter={StaticResource NegateConverter}}"
                            Grid.Row="1"
                            HeightRequest="50"
-                           Margin="0, 0, 0, -16"
+                           Margin="-16, 0, -16, -16"
                            AdsId="{Binding BannerAdId}"/>
     </Grid>
 </ContentPage>

@@ -65,7 +65,7 @@ namespace Hanoi.Pages.Settings
             {
                 var info = new StringBuilder();
                 info.AppendLine($"Version: {Version}");
-                info.AppendLine($"Platform: {DeviceInfo.Platform.ToString()}");
+                info.AppendLine($"Platform: {DeviceInfo.Platform}");
                 info.AppendLine($"OS Version: {DeviceInfo.VersionString}");
                 info.AppendLine($"Manufacturer: {DeviceInfo.Manufacturer}");
                 info.AppendLine($"Model: {DeviceInfo.Model}");
@@ -106,7 +106,7 @@ namespace Hanoi.Pages.Settings
                 if (restored)
                     return;
             }
-            catch (InAppBillingPurchaseException)
+            catch (Exception)
             {
 
             }
@@ -119,18 +119,25 @@ namespace Hanoi.Pages.Settings
                     IsPro = true;
                 }
             }
-            catch (InAppBillingPurchaseException ex)
+            catch (Exception ex)
             {
-                var message = ex.PurchaseError switch
+                string? message;
+                if (ex is InAppBillingPurchaseException inAppBillingPurchaseException)
                 {
-                    PurchaseError.AppStoreUnavailable => "The app store is currently unavailable.",
-                    PurchaseError.BillingUnavailable => "The app store is currently unavailable.",
-                    PurchaseError.PaymentInvalid => "The payment was invalid!",
-                    PurchaseError.PaymentNotAllowed => "The payment is not allowed",
-                    _ => "Unknown error"
-                };
-
+                    message = inAppBillingPurchaseException.PurchaseError switch
+                    {
+                        PurchaseError.AppStoreUnavailable => "The app store is currently unavailable.",
+                        PurchaseError.BillingUnavailable => "The app store is currently unavailable.",
+                        PurchaseError.PaymentInvalid => "The payment was invalid!",
+                        PurchaseError.PaymentNotAllowed => "The payment is not allowed",
+                        _ => "Unknown error"
+                    };
+                } else
+                {
+                    message = $"Unknown error: {ex.Message}";
+                }
                 await _pageDialogService.DisplayAlertAsync("Error", message, "Ok");
+
             }
         }
 

@@ -10,7 +10,7 @@
         CornerRadius="12"
         Padding="{StaticResource PagePadding}">
         <Grid 
-            RowDefinitions="Auto, Auto"
+            RowDefinitions="*, Auto"
             ColumnDefinitions="*, *"
             RowSpacing="16">
             <Label Text="Your saved progress of the previous game will be lost. Are your sure you want to continue?"

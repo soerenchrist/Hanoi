@@ -29,6 +29,8 @@
 
                     <Switch Grid.Column="1"
                         VerticalOptions="Center"
+                        OnColor="{DynamicResource AccentColor}"
+                        ThumbColor="{DynamicResource AccentColor}"    
                         IsToggled="{Binding GameSettings.ShowDiscNumbers}" />
                 </Grid>
 

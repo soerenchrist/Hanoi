@@ -3,9 +3,10 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
       xmlns:converters="clr-namespace:Hanoi.Converters" 
       xmlns:dialogs="clr-namespace:Hanoi.Dialogs"
-      xmlns:common="clr-namespace:Hanoi.Common"
+      xmlns:common="clr-namespace:Hanoi.Common" xmlns:viewmodels="clr-namespace:Hanoi.ViewModels"
       x:Class="Hanoi.Dialogs.GameFinishedDialog"
       WidthRequest="400"
+      Margin="16"
       x:DataType="dialogs:GameFinishedDialogViewModel">
     <Grid.Resources>
         <converters:MillisecondsToTimeConverter x:Key="TimeConverter" />
@@ -17,50 +18,70 @@
         Padding="{StaticResource PagePadding}">
 
         <Grid 
-            RowDefinitions="Auto, Auto, Auto, Auto"
-            ColumnDefinitions="*, Auto">
+            RowDefinitions="Auto, Auto, *, Auto">
             <Label FontSize="Large"
                Text="You did it!"
                Grid.Column="0"
                VerticalOptions="Center"
                HorizontalOptions="Center"
-               Grid.ColumnSpan="2"
                />
             <Button Text="{x:Static common:IconFont.Close}"
-                FontSize="Large"
-                BackgroundColor="{DynamicResource BackgroundColor}"
-                FontFamily="MaterialIcons"
-                Grid.Column="1"
-                Command="{Binding Close}" />
+                    FontSize="Large"
+                    Style="{StaticResource IconButton}"
+                    BackgroundColor="{DynamicResource BackgroundColor}"
+                    HorizontalOptions="End"
+                    VerticalOptions="End"
+                    Command="{Binding Close}" />
 
-            <Label Grid.Column="0"
-               Grid.Row="1"
-               Grid.ColumnSpan="2"
-               Margin="10"
-               HorizontalOptions="Center">
+            <Label Grid.Row="1">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="Your time: " />
-                        <Span Text="{Binding Time, Converter={StaticResource TimeConverter}}" />
+                        <Span Text="Your times for " />
+                        <Span Text="{Binding CurrentItem.NumberOfDiscs}" />
+                        <Span Text=" discs:" />
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-            <Label Grid.ColumnSpan="2"
-               Grid.Row="2"
-               HorizontalOptions="Center"
-               FontAttributes="Bold"
-               Margin="10"
-               Text="It's a new Highscore!"
-               IsVisible="{Binding HighScore}" />
-            <Grid Grid.Row="3"
-              Grid.ColumnSpan="2"
-              ColumnDefinitions="*, *">
-                <Button Text="Show highscores"
-                    Command="{Binding ShowHighscores}"/>
-                <Button Text="Close"
-                    Command="{Binding Close}"
-                    Grid.Column="1"/>
-            </Grid>
+
+            <StackLayout BindableLayout.ItemsSource="{Binding Highscores}"
+                         Grid.Row="2"
+                         Spacing="0">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodels:HighscoreViewModel">
+                        <Grid ColumnDefinitions="Auto, *, Auto"
+                              Padding="8, 4">
+                            <Frame IsVisible="{Binding IsSelected}"
+                                   Margin="-8, -4"
+                                   BackgroundColor="{DynamicResource BackgroundColor}"
+                                   BorderColor="{DynamicResource AccentColor}"
+                                   Grid.ColumnSpan="3" />
+                            <Label Grid.Column="0"
+                                   FontSize="Medium"
+                                   VerticalOptions="Center">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding Position}" />
+                                        <Span Text="." />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label Grid.Column="1"
+                                   VerticalOptions="Center"
+                                   FontSize="Medium"
+                                   Text="{Binding DateTime}" />
+                            <Label Text="{Binding Time, Converter={StaticResource TimeConverter}}" 
+                                   FontSize="Medium"
+                                   VerticalOptions="Center"
+                                   Grid.Column="2"/>
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+
+            <Button Text="Close"
+                    Grid.Row="3"
+                    Command="{Binding Close}" />
         </Grid>
     </Frame>
 </Grid>

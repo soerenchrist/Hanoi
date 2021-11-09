@@ -159,32 +159,23 @@ namespace Hanoi.Pages.Game
                 return;
 
             GameLogic.Stopwatch.Stop();
-            var fastestTime = _dataService.GetFastestTime(GameLogic.NumberOfDiscs);
-            bool highScore = GameLogic.Stopwatch.ElapsedMilliseconds < fastestTime;
 
-            _dataService.AddHighscore(new HighscoreItem
+            var highscoreItem = new HighscoreItem
             {
                 DateTime = DateTime.Now,
                 NumberOfDiscs = GameLogic.NumberOfDiscs,
                 TimeInMilliseconds = GameLogic.Stopwatch.ElapsedMilliseconds,
                 MovesNeeded = GameLogic.MoveCount
-            });
+            };
+            _dataService.AddHighscore(highscoreItem);
 
             var dialogParameters = new DialogParameters
             {
-                { "Highscore", highScore },
-                { "Time", GameLogic.Stopwatch.Elapsed }
+                { "HighscoreItem", highscoreItem},
             };
 
-            var parameters = await _dialogService.ShowDialogAsync($"GameFinished", dialogParameters);
-            if (parameters.Parameters?.ContainsKey("ShowHighscores") ?? false)
-            {
-                await NavigationService.NavigateAsync($"../Highscores?NumberOfDiscs={GameLogic.NumberOfDiscs}");
-            }
-            else
-            {
-                GoBack.Execute();
-            }
+            await _dialogService.ShowDialogAsync($"GameFinished", dialogParameters);
+            GoBack.Execute();
         }
 
         private string FormatTime(TimeSpan time)

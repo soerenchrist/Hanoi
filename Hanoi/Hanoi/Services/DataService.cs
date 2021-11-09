@@ -71,6 +71,19 @@ namespace Hanoi.Services
             return items;
         }
 
+        public List<HighscoreItem> GetTopHighscores(int numberOfDiscs)
+            => _db.Table<HighscoreItem>()
+            .Where(x => x.NumberOfDiscs == numberOfDiscs)
+            .OrderBy(x => x.TimeInMilliseconds)
+            .Take(5)
+            .ToList();
+
+        public int GetPositionOfHighscoreItem(HighscoreItem item)
+            => _db.Table<HighscoreItem>()
+                .Where(x => x.NumberOfDiscs == item.NumberOfDiscs)
+                .Where(x => x.TimeInMilliseconds < item.TimeInMilliseconds)
+                .Count() + 1;
+
         public void IncrementGameCount()
         {
             if (_settingsService.IsPro)

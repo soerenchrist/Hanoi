@@ -14,6 +14,7 @@ namespace Hanoi.ViewModels
         public int MovesNeeded { get; }
         public int PossibleMoves { get; }
         public bool PerfectGame { get; }
+        public bool IsSelected { get; }
 
         public HighscoreViewModel(HighscoreItem item)
         {
@@ -25,6 +26,11 @@ namespace Hanoi.ViewModels
             MovesNeeded = item.MovesNeeded;
 
             PerfectGame = MovesNeeded == PossibleMoves;
+        }
+
+        public HighscoreViewModel(HighscoreItem item, bool isSelected) : this(item)
+        {
+            IsSelected = isSelected;
         }
     }
 }

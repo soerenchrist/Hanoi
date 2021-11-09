@@ -1,37 +1,54 @@
 ﻿using Hanoi.Dialogs.Base;
+using Hanoi.Models;
+using Hanoi.Services;
+using Hanoi.ViewModels;
 using Prism.Commands;
 using Prism.Services.Dialogs;
 using ReactiveUI;
 using System;
+using System.Collections.ObjectModel;
 
 namespace Hanoi.Dialogs
 {
     public class GameFinishedDialogViewModel : DialogViewModelBase
     {
-        private TimeSpan _time;
-        public TimeSpan Time
+        private HighscoreItem? _currentItem;
+        public HighscoreItem? CurrentItem
         {
-            get => _time;
-            set => this.RaiseAndSetIfChanged(ref _time, value);
+            get => _currentItem;
+            set => this.RaiseAndSetIfChanged(ref _currentItem, value);
         }
 
-        private bool _highScore;
-        public bool HighScore
+        public ObservableCollection<HighscoreViewModel> Highscores { get; } = new ObservableCollection<HighscoreViewModel>();
+
+        private readonly DataService _dataService;
+        public GameFinishedDialogViewModel(DataService dataService)
         {
-            get => _highScore;
-            set => this.RaiseAndSetIfChanged(ref _highScore, value);
+            _dataService = dataService;
         }
 
-        private DelegateCommand? _showHighscores;
-        public DelegateCommand ShowHighscores => _showHighscores ??= new DelegateCommand(() => CloseWithParams.Execute(new DialogParameters()
-        {
-            { "ShowHighscores", true }
-        }));
 
         public override void OnDialogOpened(IDialogParameters parameters)
         {
-            Time = parameters.GetValue<TimeSpan>("Time");
-            HighScore = parameters.GetValue<bool>("Highscore");
+            CurrentItem = parameters.GetValue<HighscoreItem>("HighscoreItem");
+            var highscores = _dataService.GetTopHighscores(CurrentItem.NumberOfDiscs);
+            bool isTop5 = false;
+            int index = 1;
+            foreach (var item in highscores)
+            {
+                item.Position = index;
+                bool found = item.Id == CurrentItem.Id;
+                if (found)
+                    isTop5 = true;
+                Highscores.Add(new HighscoreViewModel(item, found));
+                index++;
+            }
+            if (!isTop5)
+            {
+                CurrentItem.Position = _dataService.GetPositionOfHighscoreItem(CurrentItem);
+                Highscores.RemoveAt(Highscores.Count - 1);
+                Highscores.Add(new HighscoreViewModel(CurrentItem, true));
+            }
         }
     }
 }

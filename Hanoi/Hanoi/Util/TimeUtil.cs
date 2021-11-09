@@ -12,9 +12,9 @@ namespace Hanoi.Util
 
             int minutes = seconds / 60;
             if (minutes == 0)
-                return $"{seconds}.{remainingMillis} s";
+                return $"{seconds}.{remainingMillis.ToString().PadLeft(3, '0')} s";
             var remainingSeconds = minutes % 60;
-            return $"{minutes}:{remainingSeconds.ToString().PadLeft(2, '0')}.{remainingMillis} min";
+            return $"{minutes}:{remainingSeconds.ToString().PadLeft(2, '0')}.{remainingMillis.ToString().PadLeft(3, '0')} min";
         }
     }
 }

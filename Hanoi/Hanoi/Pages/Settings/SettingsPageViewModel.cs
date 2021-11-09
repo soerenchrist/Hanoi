@@ -1,6 +1,7 @@
 ﻿using Hanoi.Logic;
 using Hanoi.Pages.Base;
 using Hanoi.Services;
+using Hanoi.Services.Abstractions;
 using Hanoi.Themes;
 using Hanoi.Util;
 using Plugin.InAppBilling;
@@ -20,7 +21,12 @@ namespace Hanoi.Pages.Settings
 {
     public class SettingsPageViewModel : ViewModelBase
     {
-        public GameSettings GameSettings { get; } = new();
+        public bool ShowNumbers
+        { 
+            get => _settingsService.ShowNumbers;
+            set => _settingsService.ShowNumbers = value;
+        }
+
         private bool _isPro;
         public bool IsPro 
         {
@@ -47,20 +53,23 @@ namespace Hanoi.Pages.Settings
         private readonly IBillingService _billingService;
         private readonly IPageDialogService _pageDialogService;
         private readonly IDialogService _dialogService;
+        private readonly ISettingsService _settingsService;
         public SettingsPageViewModel(INavigationService navigationService,
             IBillingService billingService,
+            ISettingsService settingsService,
             IPageDialogService pageDialogService,
             IDialogService dialogService) : base(navigationService)
         {
             _billingService = billingService;
             _pageDialogService = pageDialogService;
             _dialogService = dialogService;
+            _settingsService = settingsService;
         }
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-            IsPro = Preferences.Get("Pro", false);
+            IsPro = _settingsService.IsPro;
             SelectedTheme = ThemeHelper.CurrentTheme;
         }
 

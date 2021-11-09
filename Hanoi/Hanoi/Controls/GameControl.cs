@@ -16,11 +16,11 @@ namespace Hanoi.Controls
         public static readonly BindableProperty GameLogicProperty =
             BindableProperty.Create(nameof(GameLogic), typeof(GameLogic), typeof(GameControl), null, BindingMode.OneWay, propertyChanged: GameLogicPropertyChanged);
 
-        public static readonly BindableProperty GameSettingsProperty =
-            BindableProperty.Create(nameof(GameSettings), typeof(GameSettings), typeof(GameControl), null, BindingMode.OneWay, propertyChanged: GameSettingsPropertyChanged);
+        public static readonly BindableProperty ShowNumbersProperty =
+            BindableProperty.Create(nameof(ShowNumbers), typeof(bool), typeof(GameControl), true, BindingMode.OneWay, propertyChanged: ShowNumbersPropertyChanged);
 
         public static readonly BindableProperty GameRunningProperty =
-            BindableProperty.Create(nameof(GameRunning), typeof(bool), typeof(GameControl), false, BindingMode.OneWay, propertyChanged: GameSettingsPropertyChanged);
+            BindableProperty.Create(nameof(GameRunning), typeof(bool), typeof(GameControl), false, BindingMode.OneWay, propertyChanged: ShowNumbersPropertyChanged);
 
         public GameLogic? GameLogic {
             get => (GameLogic) GetValue(GameLogicProperty);
@@ -33,10 +33,10 @@ namespace Hanoi.Controls
             set => SetValue(GameRunningProperty, value);
         }
 
-        public GameSettings? GameSettings
+        public bool ShowNumbers
         {
-            get => (GameSettings) GetValue(GameSettingsProperty);
-            set => SetValue(GameSettingsProperty, value);
+            get => (bool) GetValue(ShowNumbersProperty);
+            set => SetValue(ShowNumbersProperty, value);
         }
 
         private readonly SKPaint _stickPaint = new()
@@ -169,7 +169,7 @@ namespace Hanoi.Controls
 
         private void DrawText(float x, float y, Disc disc, SKCanvas canvas)
         {
-            if (GameSettings?.ShowDiscNumbers ?? false)
+            if (ShowNumbers)
             {
                 string text = disc.Size.ToString();
                 SKRect bounds = new SKRect();
@@ -211,7 +211,7 @@ namespace Hanoi.Controls
             }
         }
 
-        private static void GameSettingsPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void ShowNumbersPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             if (bindable is GameControl control)
                 control.InvalidateSurface();

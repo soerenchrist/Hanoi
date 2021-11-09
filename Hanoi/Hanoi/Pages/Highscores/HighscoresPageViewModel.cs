@@ -2,6 +2,7 @@
 using Hanoi.Models;
 using Hanoi.Pages.Base;
 using Hanoi.Services;
+using Hanoi.Services.Abstractions;
 using Hanoi.Util;
 using Hanoi.ViewModels;
 using MarcTron.Plugin;
@@ -41,9 +42,12 @@ namespace Hanoi.Pages.Highscores
         public ReadOnlyObservableCollection<HighscoreViewModel> Highscores => _highscores;
 
         private readonly DataService _dataService;
+        private readonly ISettingsService _settingsService;
         public HighscoresPageViewModel(INavigationService navigationService,
-            DataService dataService) : base(navigationService)
+            DataService dataService,
+            ISettingsService settingsService) : base(navigationService)
         {
+            _settingsService = settingsService;
             _dataService = dataService;
             for (int i = 3; i <= 20; i++)
             {
@@ -75,7 +79,7 @@ namespace Hanoi.Pages.Highscores
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-            IsPro = Preferences.Get("Pro", false);
+            IsPro = _settingsService.IsPro;
             if (parameters.ContainsKey("NumberOfDiscs"))
             {
                 SelectedDiscSizeIndex = parameters.GetValue<int>("NumberOfDiscs");

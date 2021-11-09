@@ -2,13 +2,12 @@
 using Hanoi.Models;
 using Hanoi.Pages.Base;
 using Hanoi.Services;
-using MarcTron.Plugin;
+using Hanoi.Services.Abstractions;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services.Dialogs;
 using ReactiveUI;
 using System;
-using System.Diagnostics;
 using System.Reactive.Linq;
 
 namespace Hanoi.Pages.Game
@@ -35,20 +34,24 @@ namespace Hanoi.Pages.Game
         private ObservableAsPropertyHelper<bool> _gameRunning;
         public bool GameRunning => _gameRunning.Value;
 
-        public GameSettings GameSettings { get; } = new();
+        public bool ShowNumbers => _settingsService.ShowNumbers;
 
-        private readonly IDialogService _dialogService;
-        private readonly DataService _dataService;
-
+        
         private DelegateCommand? _pause;
         public DelegateCommand Pause => _pause ??= new DelegateCommand(ExecutePause);
+        
+        private readonly IDialogService _dialogService;
+        private readonly DataService _dataService;
+        private readonly ISettingsService _settingsService;
 
         public GamePageViewModel(INavigationService navigationService,
             IDialogService dialogService,
+            ISettingsService settingsService,
             DataService dataService) : base(navigationService)
         {
             _dialogService = dialogService;
             _dataService = dataService;
+            _settingsService = settingsService;
 
             var countdownChanged = this.WhenAnyValue(x => x.CountDown);
             var countdownFinished = countdownChanged.Where(x => x == 0);

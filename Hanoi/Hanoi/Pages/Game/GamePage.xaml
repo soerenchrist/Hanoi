@@ -56,7 +56,7 @@
 
 
             <controls:GameControl GameLogic="{Binding GameLogic}"
-                                  GameSettings="{Binding GameSettings}"
+                                  ShowNumbers="{Binding ShowNumbers}"
                                   GameRunning="{Binding GameRunning}"
                                   Grid.Row="1"/>
         </Grid>

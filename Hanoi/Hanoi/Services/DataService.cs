@@ -1,5 +1,6 @@
 ﻿using Hanoi.Logic;
 using Hanoi.Models;
+using Hanoi.Services.Abstractions;
 using SQLite;
 using System.Collections.Generic;
 using System.IO;
@@ -13,11 +14,13 @@ namespace Hanoi.Services
         private readonly SQLiteConnection _db;
         public GameLogic? CurrentGame { get; set; }
 
-        public DataService()
+        private readonly ISettingsService _settingsService;
+        public DataService(ISettingsService settingsService)
         {
             var basePath = FileSystem.AppDataDirectory;
             var filePath = Path.Combine(basePath, "database.db");
             _db = new SQLiteConnection(filePath);
+            _settingsService = settingsService;
         }
 
         public void Initialize()
@@ -70,7 +73,7 @@ namespace Hanoi.Services
 
         public void IncrementGameCount()
         {
-            if (Preferences.Get("Pro", false))
+            if (_settingsService.IsPro)
                 return;
 
             var count = _db.Table<AdCount>().Count();
@@ -82,7 +85,7 @@ namespace Hanoi.Services
 
         public bool ShouldRequestStoreReview()
         {
-            if (Preferences.Get("HasReviewed", false))
+            if (_settingsService.HasReviewed)
                 return false;
 
             return _db.Table<HighscoreItem>().Count() > 5;
@@ -90,7 +93,7 @@ namespace Hanoi.Services
 
         public bool ShouldShowAd()
         {
-            if (Preferences.Get("Pro", false))
+            if (_settingsService.IsPro)
                 return false;
 
             var adCount = _db.Table<AdCount>().Count();

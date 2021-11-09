@@ -4,6 +4,7 @@ using Hanoi.Pages.Highscores;
 using Hanoi.Pages.Settings;
 using Hanoi.Pages.Start;
 using Hanoi.Services;
+using Hanoi.Services.Abstractions;
 using Hanoi.Themes;
 using Prism;
 using Prism.Ioc;
@@ -32,7 +33,10 @@ namespace Hanoi
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            var dataService = new DataService();
+            var settingsService = new SettingsService();
+            containerRegistry.RegisterInstance<ISettingsService>(settingsService);
+
+            var dataService = new DataService(settingsService);
             dataService.Initialize();
 
             containerRegistry.RegisterInstance(dataService);

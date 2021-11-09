@@ -1,4 +1,5 @@
-﻿using Plugin.InAppBilling;
+﻿using Hanoi.Services.Abstractions;
+using Plugin.InAppBilling;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,19 +7,14 @@ using Xamarin.Essentials;
 
 namespace Hanoi.Services
 {
-    public interface IBillingService
-    {
-        Task<string> GetPrice();
-        Task<bool> Purchase();
-        Task<bool> RestorePurchase();
-    }
-
     public class BillingService : IBillingService
     {
         private const string ProductId = "hanoi_pro";
 
-        public BillingService()
+        private ISettingsService _settingsService;
+        public BillingService(ISettingsService settingsService)
         {
+            _settingsService = settingsService;
         }
 
         public async Task<string> GetPrice()
@@ -59,8 +55,8 @@ namespace Hanoi.Services
                     throw new InAppBillingPurchaseException(PurchaseError.ItemUnavailable);
                 else if (purchase.State == PurchaseState.Purchased)
                 {
-                    Preferences.Set("Pro", true);
-                    Preferences.Set("ProReceipt", purchase.PurchaseToken ?? string.Empty);
+                    _settingsService.IsPro = true;
+                    _settingsService.ProReceipt = purchase.PurchaseToken ?? string.Empty;
 
                     try
                     {
@@ -91,12 +87,12 @@ namespace Hanoi.Services
                 var purchases = await CrossInAppBilling.Current.GetPurchasesAsync(ItemType.InAppPurchase);
                 if (purchases?.Any(p => p.ProductId == ProductId) ?? false)
                 {
-                    Preferences.Set("Pro", true);
-                    
+                    _settingsService.IsPro = true;
+
                     var purchase = purchases.FirstOrDefault(p => p.ProductId == ProductId);
                     if (string.IsNullOrWhiteSpace(Preferences.Get("ProReceipt", "")))
                     {
-                        Preferences.Set("ProReceipt", purchase?.PurchaseToken ?? string.Empty);
+                        _settingsService.ProReceipt = purchase?.PurchaseToken ?? string.Empty;
                     }
 
                     var acknoledged = purchase?.IsAcknowledged ?? true;

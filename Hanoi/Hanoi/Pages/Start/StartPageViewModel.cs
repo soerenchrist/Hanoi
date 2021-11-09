@@ -1,5 +1,6 @@
 ﻿using Hanoi.Pages.Base;
 using Hanoi.Services;
+using Hanoi.Services.Abstractions;
 using Hanoi.Themes;
 using Hanoi.Util;
 using MarcTron.Plugin;
@@ -68,12 +69,15 @@ namespace Hanoi.Pages.Start
 
         private readonly DataService _dataService;
         private readonly IDialogService _dialogService;
+        private readonly ISettingsService _settingsService;
 
         public StartPageViewModel(INavigationService navigationService,
             DataService dataService,
+            ISettingsService settingsService,
             IDialogService dialogService) : base(navigationService)
         {
             _dialogService = dialogService;
+            _settingsService = settingsService;
             _dataService = dataService;
             _discsText = this.WhenAnyValue(x => x.NumberOfDiscs)
                 .Select(x => $"{x} discs")
@@ -83,7 +87,7 @@ namespace Hanoi.Pages.Start
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-            IsPro = Preferences.Get("Pro", false);
+            IsPro = _settingsService.IsPro;
             HasSavedGame = _dataService.HasSavedGame();
             TotalMoves = _dataService.GetTotalMoves();
 

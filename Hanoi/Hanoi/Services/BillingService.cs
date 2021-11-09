@@ -90,7 +90,7 @@ namespace Hanoi.Services
                     _settingsService.IsPro = true;
 
                     var purchase = purchases.FirstOrDefault(p => p.ProductId == ProductId);
-                    if (string.IsNullOrWhiteSpace(Preferences.Get("ProReceipt", "")))
+                    if (string.IsNullOrWhiteSpace(_settingsService.ProReceipt))
                     {
                         _settingsService.ProReceipt = purchase?.PurchaseToken ?? string.Empty;
                     }

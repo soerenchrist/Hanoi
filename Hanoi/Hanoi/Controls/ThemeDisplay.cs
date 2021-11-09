@@ -46,6 +46,8 @@ namespace Hanoi.Controls
             set => SetValue(NumberOfDiscsProperty, value);
         }
 
+        private long _tapStartedTimeStamp;
+
         private ResourceDictionary? _currentDict;
         private int _canvasWidth;
         private int _canvasHeight;
@@ -109,11 +111,18 @@ namespace Hanoi.Controls
 
         protected override void OnTouch(SKTouchEventArgs e)
         {
-            base.OnTouch(e);
+            const int thresh = 500;
             if (e.ActionType == SKTouchAction.Pressed)
             {
-                Command?.Execute(Theme);
+                _tapStartedTimeStamp = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
             }
+            else if (e.ActionType == SKTouchAction.Released || e.ActionType == SKTouchAction.Exited)
+            {
+                var currentTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+                if (currentTime - _tapStartedTimeStamp < thresh)
+                    Command?.Execute(Theme);
+            }
+            e.Handled = true;
         }
 
         private void DrawStack(SKCanvas canvas)

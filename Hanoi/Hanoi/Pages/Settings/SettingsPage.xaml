@@ -36,34 +36,36 @@
 
                 <Label Text="Themes"
                        FontSize="Medium" />
-                <Grid ColumnDefinitions="120, 120, 120, 120, 120"
+                <ScrollView Orientation="Horizontal">
+                    <Grid ColumnDefinitions="120, 120, 120, 120, 120"
                       HeightRequest="80">
-                    <controls:ThemeDisplay Theme="{x:Static theme:GameTheme.Blue}"
+                        <controls:ThemeDisplay Theme="{x:Static theme:GameTheme.Blue}"
                                        NumberOfDiscs="4"
                                        SelectedTheme="{Binding SelectedTheme}"
                                        Command="{Binding SetTheme}" />
-                    <controls:ThemeDisplay Theme="{x:Static theme:GameTheme.Red}"
+                        <controls:ThemeDisplay Theme="{x:Static theme:GameTheme.Red}"
                                        NumberOfDiscs="4"
                                        SelectedTheme="{Binding SelectedTheme}"
                                        Command="{Binding SetTheme}"
                                        Grid.Column="1"/>
 
-                    <controls:ThemeDisplay Theme="{x:Static theme:GameTheme.BlackWhite}"
+                        <controls:ThemeDisplay Theme="{x:Static theme:GameTheme.BlackWhite}"
                                        NumberOfDiscs="4"
                                        SelectedTheme="{Binding SelectedTheme}"
                                        Command="{Binding SetTheme}"
                                        Grid.Column="2"/>
-                    <controls:ThemeDisplay Theme="{x:Static theme:GameTheme.Light}"
+                        <controls:ThemeDisplay Theme="{x:Static theme:GameTheme.Light}"
                                        NumberOfDiscs="4"
                                        SelectedTheme="{Binding SelectedTheme}"
                                        Command="{Binding SetTheme}"
                                        Grid.Column="3"/>
-                    <controls:ThemeDisplay Theme="{x:Static theme:GameTheme.Rainbow}"
+                        <controls:ThemeDisplay Theme="{x:Static theme:GameTheme.Rainbow}"
                                        NumberOfDiscs="4"
                                        SelectedTheme="{Binding SelectedTheme}"
                                        Command="{Binding SetTheme}"
                                        Grid.Column="4"/>
-                </Grid>
+                    </Grid>
+                </ScrollView>
                 <Button Text="Remove ads"
                     Command="{Binding Purchase}"
                     IsVisible="{Binding IsPro, Converter={StaticResource NegateConverter}}" />

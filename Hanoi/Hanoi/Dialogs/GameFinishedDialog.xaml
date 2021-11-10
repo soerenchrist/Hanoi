@@ -10,6 +10,7 @@
       x:DataType="dialogs:GameFinishedDialogViewModel">
     <Grid.Resources>
         <converters:MillisecondsToTimeConverter x:Key="TimeConverter" />
+        <converters:ShortDateConverter x:Key="ShortDateConverter" />
     </Grid.Resources>
 
     <Frame 
@@ -23,8 +24,7 @@
                Text="You did it!"
                Grid.Column="0"
                VerticalOptions="Center"
-               HorizontalOptions="Center"
-               />
+               HorizontalOptions="Center" />
             <Button Text="{x:Static common:IconFont.Close}"
                     FontSize="Large"
                     Style="{StaticResource IconButton}"
@@ -57,11 +57,11 @@
                                    Grid.ColumnSpan="3" />
                             <Label Grid.Column="0"
                                    FontSize="Medium"
+                                   FontFamily="InconsolataBold"
                                    VerticalOptions="Center">
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="{Binding Position}" />
-                                        <Span Text="." />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -69,7 +69,8 @@
                             <Label Grid.Column="1"
                                    VerticalOptions="Center"
                                    FontSize="Medium"
-                                   Text="{Binding DateTime}" />
+                                   Margin="20,0,0,0"
+                                   Text="{Binding DateTime, Converter={StaticResource ShortDateConverter}}" />
                             <Label Text="{Binding Time, Converter={StaticResource TimeConverter}}" 
                                    FontSize="Medium"
                                    VerticalOptions="Center"

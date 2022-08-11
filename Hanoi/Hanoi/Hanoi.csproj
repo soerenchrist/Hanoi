@@ -27,17 +27,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MarcTron.Admob" Version="1.6.7" />
+    <PackageReference Include="MarcTron.Admob" Version="1.6.9" />
     <PackageReference Include="Plugin.InAppBilling" Version="4.0.2" />
-    <PackageReference Include="Plugin.StoreReview" Version="3.1.0" />
+    <PackageReference Include="Plugin.StoreReview" Version="3.3.1" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
     <PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
     <PackageReference Include="Prism.Forms" Version="8.1.97" />
-    <PackageReference Include="ReactiveUI.XamForms" Version="16.3.10" />
-    <PackageReference Include="SkiaSharp.Views.Forms" Version="2.80.3" />
+    <PackageReference Include="ReactiveUI.XamForms" Version="18.3.1" />
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="2.88.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2515" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
   </ItemGroup>
 
   <ItemGroup>
